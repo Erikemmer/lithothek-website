@@ -12,9 +12,40 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** true: Seite steuert ihre Breite selbst (z. B. Startseite mit vollflächigem Hero) */
+  fullWidth?: boolean;
 }
 
-const { title, description = 'Lithothek gGmbH – Sammlung, Museum und Projekte rund um Mineralien.' } = Astro.props;
+const {
+  title,
+  description = 'Lithothek gGmbH – Sammlung, Museum und Projekte rund um Mineralien.',
+  fullWidth = false,
+} = Astro.props;
+
+/*
+ * Brotkrumen-Navigation (Layout-Vorbild: Design-Zielbild 08/2026).
+ * Wird automatisch aus dem Pfad erzeugt; die Startseite zeigt keine.
+ */
+const labels: Record<string, string> = {
+  'ueber-uns': 'Über uns',
+  'lithothek-online': 'Sammlung',
+  museum: 'Museum',
+  projekte: 'Projekte',
+  sammler: 'Sammler',
+  news: 'News',
+  impressum: 'Impressum',
+  datenschutz: 'Datenschutz',
+};
+const segments = Astro.url.pathname.split('/').filter(Boolean);
+const crumbs = segments.map((seg, i) => ({
+  label:
+    labels[seg] ??
+    decodeURIComponent(seg)
+      .replace(/-/g, ' ')
+      .replace(/\b\p{L}/gu, (c) => c.toUpperCase()),
+  href: '/' + segments.slice(0, i + 1).join('/') + '/',
+}));
+const showCrumbs = !fullWidth && crumbs.length > 0;
 ---
 <!doctype html>
 <html lang="de">
@@ -26,7 +57,19 @@ const { title, description = 'Lithothek gGmbH – Sammlung, Museum und Projekte 
   </head>
   <body>
     <Header />
-    <main class="wrap">
+    <main class={fullWidth ? undefined : 'wrap'}>
+      {showCrumbs && (
+        <nav class="crumbs" aria-label="Brotkrumen">
+          <ol>
+            <li><a href="/">Startseite</a></li>
+            {crumbs.map((c, i) => (
+              <li>
+                {i < crumbs.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <slot />
     </main>
     <Footer />
