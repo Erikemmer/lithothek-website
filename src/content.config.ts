@@ -18,6 +18,7 @@ const news = defineCollection({
     titel: z.string(),
     datum: z.coerce.date(),
     zusammenfassung: z.string().optional(),
+    bild: z.string().optional(),
   }),
 });
 
@@ -28,6 +29,7 @@ const projekte = defineCollection({
     kurzbeschreibung: z.string(),
     externerLink: z.string().url().optional(),
     reihenfolge: z.number().default(0),
+    bild: z.string().optional(),
   }),
 });
 
@@ -47,6 +49,7 @@ const objekte = defineCollection({
     sammler: z.string(),
     datum: z.coerce.date(),
     demo: z.boolean().default(false),
+    bild: z.string().optional(),
   }),
 });
 
