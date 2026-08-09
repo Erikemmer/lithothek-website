@@ -1,26 +1,86 @@
 ---
 import Wordmark from './brand/Wordmark.astro';
 
+/*
+ * Mehrspaltiger Footer (Layout-Vorbild: Design-Zielbild 08/2026):
+ * Wortmarke + Leitsatz · Navigation · Rechtliches · Kontakt.
+ * Kontaktdaten bewusst noch ohne Adresse/E-Mail — erst wenn die echten,
+ * verifizierten Angaben vorliegen (siehe Aufgabe „Echte Pflichtangaben").
+ */
 const year = new Date().getFullYear();
+
+const navigation = [
+  { href: '/ueber-uns/', label: 'Über uns' },
+  { href: '/lithothek-online/', label: 'Sammlung' },
+  { href: '/museum/', label: 'Museum' },
+  { href: '/projekte/', label: 'Projekte' },
+  { href: '/sammler/', label: 'Sammler' },
+  { href: '/news/', label: 'News' },
+];
 ---
 <footer class="site-footer">
-  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-    <div style="display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
       <span class="footer-wordmark"><Wordmark subline /></span>
-      <p style="margin:0;">&copy; {year} Lithothek gGmbH</p>
+      <p class="footer-claim">
+        Die Welt der Mineralien im Kleinen sichtbar, verständlich und dauerhaft
+        zugänglich machen.
+      </p>
     </div>
+
+    <nav aria-label="Fußzeilen-Navigation">
+      <h4 class="footer-heading">Navigation</h4>
+      <ul>
+        {navigation.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
     <nav aria-label="Rechtliches">
+      <h4 class="footer-heading">Rechtliches</h4>
       <ul>
         <li><a href="/impressum/">Impressum</a></li>
         <li><a href="/datenschutz/">Datenschutz</a></li>
       </ul>
     </nav>
+
+    <div>
+      <h4 class="footer-heading">Kontakt</h4>
+      <p class="footer-contact">
+        Lithothek gGmbH<br />
+        München<br />
+        <a href="/impressum/">Kontaktdaten im Impressum</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap footer-bottom">
+    <p>&copy; {year} Lithothek gGmbH</p>
+    <a
+      href="https://www.mineralienatlas.de/"
+      target="_blank"
+      rel="noopener"
+    >
+      Mineralienatlas ↗
+    </a>
   </div>
 </footer>
 
 <style>
   .footer-wordmark {
-    font-size: 1.1rem;
-    color: var(--ivory);
+    /* CI-Anwendungsbeispiel: Wortmarke in Gold auf dunkler Fläche */
+    font-size: 1.35rem;
+    color: var(--color-accent);
+  }
+  .footer-claim {
+    margin: 0.9rem 0 0;
+    max-width: 18rem;
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+  .footer-contact {
+    margin: 0;
+    line-height: 1.9;
   }
 </style>
