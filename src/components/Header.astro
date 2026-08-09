@@ -1,20 +1,28 @@
 ---
+import Wordmark from './brand/Wordmark.astro';
+
+/*
+ * Navigation gemäß Corporate Identity v1.1 (Website-Anwendung 01):
+ * Wortmarke (führt zur Startseite) · Über uns · Sammlung · Museum ·
+ * Projekte · Sammler · News — plus externer Mineralienatlas-Link
+ * (Entscheidungsprotokoll: nur externer Link, kein eigenes Projekt).
+ * Die URLs bleiben unverändert, nur die Beschriftungen folgen der CI.
+ */
 const nav = [
-  { href: '/', label: 'Start' },
   { href: '/ueber-uns/', label: 'Über uns' },
-  { href: '/lithothek-online/', label: 'Die Lithothek Online' },
-  { href: '/museum/', label: 'Virtuelles Museum' },
+  { href: '/lithothek-online/', label: 'Sammlung' },
+  { href: '/museum/', label: 'Museum' },
   { href: '/projekte/', label: 'Projekte' },
-  { href: '/sammler/', label: 'Sammler-Steckbriefe' },
-  { href: '/news/', label: 'Neuigkeiten' },
+  { href: '/sammler/', label: 'Sammler' },
+  { href: '/news/', label: 'News' },
 ];
 ---
 <header class="site-header">
   <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
-    <a href="/" style="font-weight:bold; font-size:1.2rem; text-decoration:none; color:var(--color-text);">
-      Lithothek gGmbH
+    <a href="/" class="brand-link" aria-label="Zur Startseite der Lithothek">
+      <Wordmark />
     </a>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Hauptnavigation">
       <ul>
         {nav.map((item) => (
           <li><a href={item.href}>{item.label}</a></li>
@@ -31,3 +39,12 @@ const nav = [
     </a>
   </div>
 </header>
+
+<style>
+  .brand-link {
+    text-decoration: none;
+    color: var(--ivory);
+    font-size: 1.35rem;
+  }
+  .brand-link:hover { color: var(--color-accent); }
+</style>

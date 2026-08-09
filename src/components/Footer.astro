@@ -1,10 +1,15 @@
 ---
+import Wordmark from './brand/Wordmark.astro';
+
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
-  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-    <p>&copy; {year} Lithothek gGmbH</p>
-    <nav>
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <div style="display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;">
+      <span class="footer-wordmark"><Wordmark subline /></span>
+      <p style="margin:0;">&copy; {year} Lithothek gGmbH</p>
+    </div>
+    <nav aria-label="Rechtliches">
       <ul>
         <li><a href="/impressum/">Impressum</a></li>
         <li><a href="/datenschutz/">Datenschutz</a></li>
@@ -12,3 +17,10 @@ const year = new Date().getFullYear();
     </nav>
   </div>
 </footer>
+
+<style>
+  .footer-wordmark {
+    font-size: 1.1rem;
+    color: var(--ivory);
+  }
+</style>
