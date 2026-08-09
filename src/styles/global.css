@@ -1,0 +1,88 @@
+:root {
+  --color-bg: #faf8f4;
+  --color-text: #211d16;
+  --color-primary: #6b4a2f;
+  --color-accent: #8a9a5b;
+  --color-muted: #75706a;
+  --max-width: 72rem;
+  font-family: "Georgia", "Iowan Old Style", serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+a { color: var(--color-primary); }
+
+header.site-header {
+  border-bottom: 1px solid #e4ddd0;
+  background: #fff;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+nav.main-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav.main-nav a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+nav.main-nav a:hover { color: var(--color-primary); }
+
+.hero {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, #fff, var(--color-bg));
+}
+
+.hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.hero p.lead { font-size: 1.15rem; color: var(--color-muted); max-width: 40rem; margin: 0 auto; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e9e2d4;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+}
+
+.card h3 { margin-top: 0; }
+
+footer.site-footer {
+  border-top: 1px solid #e4ddd0;
+  margin-top: 3rem;
+  padding: 2rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+footer.site-footer nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+}

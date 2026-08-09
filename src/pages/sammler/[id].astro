@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const sammler = await getCollection('sammler');
+  return sammler.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout title={entry.data.name}>
+  <h1>{entry.data.name}</h1>
+  {entry.data.schwerpunkt && <p><strong>{entry.data.schwerpunkt}</strong></p>}
+  <Content />
+  <p><a href="/sammler/">← Zurück zu allen Steckbriefen</a></p>
+</BaseLayout>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projekte = (await getCollection('projekte')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
+---
+<BaseLayout title="Projekte">
+  <h1>Unsere Projekte</h1>
+  <div class="card-grid">
+    {projekte.map((p) => (
+      <div class="card">
+        <h3>{p.data.titel}</h3>
+        <p>{p.data.kurzbeschreibung}</p>
+        {p.data.externerLink && <a href={p.data.externerLink} target="_blank" rel="noopener">Mehr erfahren →</a>}
+      </div>
+    ))}
+  </div>
+</BaseLayout>

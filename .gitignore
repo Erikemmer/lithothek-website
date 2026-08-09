@@ -1,0 +1,23 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# environment variables
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# leftover from initial setup, safe to delete manually
+.git-broken/
+
+# editors
+.vscode/
+.idea/
+
+# logs
+npm-debug.log*

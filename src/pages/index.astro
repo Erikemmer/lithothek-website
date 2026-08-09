@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projekte = (await getCollection('projekte')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
+const news = (await getCollection('news')).sort((a, b) => b.data.datum.valueOf() - a.data.datum.valueOf()).slice(0, 3);
+---
+<BaseLayout title="Start">
+  <section class="hero">
+    <h1>Lithothek gGmbH</h1>
+    <p class="lead">
+      Die Geolitho Stiftung gGmbH fördert die Volksbildung auf dem Gebiet der Mineralogie,
+      Lagerstättenkunde, Geologie, Paläontologie und des Bergbaus – durch das Betreiben und
+      die Förderung erdwissenschaftlicher Projekte.
+    </p>
+  </section>
+
+  <section>
+    <h2>Unsere Projekte</h2>
+    <div class="card-grid">
+      {projekte.map((p) => (
+        <div class="card">
+          <h3>{p.data.titel}</h3>
+          <p>{p.data.kurzbeschreibung}</p>
+          {p.data.externerLink && <a href={p.data.externerLink} target="_blank" rel="noopener">Mehr erfahren →</a>}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>Aktuelle Neuigkeiten</h2>
+    <ul>
+      {news.map((n) => (
+        <li><a href={`/news/${n.id}/`}>{n.data.titel}</a> — {n.data.datum.toLocaleDateString('de-DE')}</li>
+      ))}
+    </ul>
+    <p><a href="/news/">Alle Neuigkeiten →</a></p>
+  </section>
+</BaseLayout>
