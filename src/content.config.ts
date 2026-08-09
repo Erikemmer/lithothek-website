@@ -31,4 +31,23 @@ const projekte = defineCollection({
   }),
 });
 
-export const collections = { sammler, news, projekte };
+/*
+ * Sammlungsobjekte (Demo-Datenbank für „Die Lithothek Online").
+ * Einträge mit demo: true sind Beispieldaten zur Layout-Abnahme und
+ * werden auf der Website deutlich als Demo gekennzeichnet. Echte Objekte
+ * ersetzen die Demo-Dateien später 1:1 (demo-Flag weglassen).
+ */
+const objekte = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/objekte' }),
+  schema: z.object({
+    mineral: z.string(),
+    fundort: z.string(),
+    land: z.string(),
+    kategorie: z.enum(['Carbonate', 'Sulfate', 'Phosphate', 'Halogenide', 'Silikate', 'Molybdate', 'Oxide', 'Sonstige']),
+    sammler: z.string(),
+    datum: z.coerce.date(),
+    demo: z.boolean().default(false),
+  }),
+});
+
+export const collections = { sammler, news, projekte, objekte };
