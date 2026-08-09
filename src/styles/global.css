@@ -199,3 +199,359 @@ footer.site-footer nav ul {
   gap: 1.25rem;
   padding: 0;
 }
+
+/* =====================================================================
+ * Layout-Erweiterungen nach Design-Zielbild (08/2026)
+ * Vollflächiger Hero, Merkmalsleiste, Medien-Karten, Brotkrumen,
+ * mehrspaltiger Footer. Werte weiterhin ausschließlich aus tokens.css.
+ * ===================================================================== */
+
+/* ---------- Vollflächige Bühne (Startseite) ---------- */
+.hero--stage {
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  padding: 0;
+  border-bottom: 1px solid rgba(182, 154, 99, 0.35);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 2.5rem;
+  align-items: end;
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-bottom: 0;
+}
+.hero-copy { padding-bottom: clamp(2.5rem, 6vw, 4rem); }
+.hero-visual { min-height: 240px; align-self: stretch; display: flex; align-items: flex-end; }
+.hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
+
+@media (max-width: 46rem) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { min-height: 150px; }
+}
+
+/* Sekundärbutton auf dunkler Fläche (Zielbild: „Über uns"-Ghost) */
+.button-ghost {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: var(--radius-button);
+  padding: 0.65rem 1.5rem;
+  background: transparent;
+  color: var(--ivory);
+  border: 1px solid rgba(243, 239, 230, 0.55);
+}
+.button-ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* ---------- Merkmalsleiste ---------- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  gap: 2rem 2.5rem;
+  padding-top: 2.75rem;
+  padding-bottom: 1.25rem;
+  text-align: center;
+}
+.feature-icon {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  color: var(--bronze);
+}
+.feature-icon svg { width: 100%; height: 100%; }
+.feature-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0.75rem 0 0.4rem;
+}
+.feature-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  opacity: 0.85;
+}
+
+/* ---------- Karten mit Bildfläche ---------- */
+.card-grid--media { align-items: stretch; }
+.card--media {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-media {
+  background: var(--color-dark);
+  min-height: 10.5rem;
+  display: flex;
+  align-items: flex-end;
+}
+.card-media--news { min-height: 8.5rem; }
+.card--media .card-body { padding: 1.35rem 1.5rem; }
+.card--media .card-body .meta { margin: 0 0 0.4rem; color: var(--bronze); }
+.card-title-s { font-size: 1.15rem; margin: 0; }
+.card a.card-title-link {
+  text-decoration: none;
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: inherit;
+  font-weight: 600;
+}
+.card a.card-title-link:hover { color: var(--copper); }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.section-link {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bronze);
+  white-space: nowrap;
+}
+.section-link:hover { color: var(--copper); }
+
+/* ---------- Brotkrumen ---------- */
+.crumbs { margin: 0.25rem 0 1rem; }
+.crumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+}
+.crumbs li { display: flex; align-items: center; gap: 0.35rem; }
+.crumbs li + li::before { content: '›'; opacity: 0.5; }
+.crumbs a { color: var(--bronze); text-decoration: none; }
+.crumbs a:hover { color: var(--copper); text-decoration: underline; }
+.crumbs span[aria-current] { opacity: 0.75; }
+
+/* ---------- Mehrspaltiger Footer ---------- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+}
+@media (max-width: 46rem) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+.footer-heading {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 0.75rem;
+}
+footer.site-footer .footer-grid nav ul {
+  list-style: none;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+footer.site-footer .footer-grid nav li { margin-bottom: 0.45rem; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(243, 239, 230, 0.15);
+  padding-top: 0.9rem;
+  padding-bottom: 1.1rem;
+  font-size: 0.8125rem;
+  opacity: 0.85;
+}
+.footer-bottom p { margin: 0; }
+
+/* ---------- Sammlungsansicht „Die Lithothek Online" ---------- */
+.lead-sub {
+  font-size: 1.125rem;
+  max-width: 40rem;
+  margin-top: 0;
+}
+.demo-note {
+  background: var(--warm-sand);
+  border: 1px solid var(--bronze);
+  border-radius: var(--radius-card);
+  padding: 0.7rem 1.1rem;
+  font-size: 0.9rem;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+.stat {
+  background: var(--color-surface);
+  border: 1px solid var(--warm-sand);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+.stat-wert {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  margin-top: 0.2rem;
+}
+.collection-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 52rem) {
+  .collection-grid { grid-template-columns: 1fr; }
+}
+.collection-main, .collection-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--warm-sand);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 1.35rem 1.5rem;
+}
+.panel-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 1rem;
+}
+.search-demo input[type='search'] {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--warm-sand);
+  border-radius: var(--radius-card);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  background: var(--ivory);
+  color: var(--color-ink);
+}
+.search-filters {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.7rem;
+}
+.search-filters select {
+  flex: 1 1 10rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--warm-sand);
+  border-radius: var(--radius-card);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  background: var(--ivory);
+  color: var(--color-ink);
+}
+.search-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.8125rem;
+  opacity: 0.7;
+}
+.obj-table-wrap { overflow-x: auto; }
+.obj-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.obj-table th {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  border-bottom: 1px solid var(--warm-sand);
+}
+.obj-table td {
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px solid rgba(216, 203, 179, 0.45);
+  vertical-align: middle;
+}
+/* Mineralname und Datum nicht umbrechen, Fundort darf fließen */
+.obj-table td:first-child,
+.obj-table td:last-child { white-space: nowrap; }
+.obj-table tr:last-child td { border-bottom: none; }
+.obj-mineral { display: flex; align-items: center; gap: 0.6rem; }
+.obj-thumb {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--color-dark);
+  display: inline-flex;
+}
+.obj-thumb svg { width: 100%; height: 100%; }
+.donut-wrap { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+.donut-wrap svg { width: 8.5rem; height: 8.5rem; flex-shrink: 0; }
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+  flex: 1 1 8rem;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+.legend-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-pct { margin-left: auto; opacity: 0.7; }
+.activity {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+.activity li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(216, 203, 179, 0.45);
+}
+.activity li:last-child { border-bottom: none; }
+.activity-date {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--bronze);
+}
