@@ -1,0 +1,235 @@
+====================================================================
+UEBERGABEDOKUMENT: LITHOTHEK gGmbH – WEBSITE-PROJEKT
+Erstellt: 09.08.2026 | Für: nahtlose Fortsetzung in neuer Agent-Sitzung
+====================================================================
+
+LIES DIESES DOKUMENT ZUERST KOMPLETT, BEVOR DU IRGENDETWAS ÄNDERST.
+Danach für volle Details: Notion-Seite "Projektkontext (für KI-Agenten)"
+https://app.notion.com/p/3b74cb500cc481818ac0e82755bd62e4
+
+
+--------------------------------------------------------------------
+1. WORUM ES GEHT
+--------------------------------------------------------------------
+Neue Website für die Lithothek gGmbH (Mineralien-Sammlung/-Archiv,
+gemeinnützig, Fokus Mikromineralien, München). Tech-Stack: Astro
+(Static Site Generator), gehostet auf Cloudflare Pages, Code auf
+GitHub, automatisches Deploy bei jedem Push/Merge auf main.
+
+Projektorganisation läuft über Notion (Aufgaben, Entscheidungen,
+Team-Doku) und GitHub (Code, Pull Requests).
+
+
+--------------------------------------------------------------------
+2. KRITISCHSTE REGEL – UNBEDINGT BEACHTEN
+--------------------------------------------------------------------
+"GEOLITHO" (auch "Geolitho Stiftung gGmbH") ist eine KOMPLETT FREMDE,
+NICHT VERBUNDENE FIRMA. Eine frühere Web-Recherche hat das fälschlich
+mit der Lithothek gGmbH vermischt (Quelle: geolitho.eu). Der Name
+"Geolitho" darf NIRGENDS auftauchen – nicht im Website-Code, nicht in
+Notion-Inhalten für die Website, nicht im Impressum.
+
+Ebenfalls NICHT unser Projekt:
+- "Mineralienatlas" -> nur externer Link in der Navigation, keine
+  eigene Projektseite/-kachel
+- "Marktplatz" -> komplett entfernt, kein Bestandteil der Website
+
+Automatischer Schutz: .github/workflows/check-forbidden-terms.yml
+prüft bei jedem Pull Request auf "Geolitho" im Code (Details siehe
+Punkt 6, Status: lokal committed, ACHTUNG NICHT gepusht, siehe dort).
+
+Zusätzlicher Vorsichtshinweis: Konkrete Zahlen/Historie zur Sammlung
+(Gründungsjahr ~2001, "Münchner Micromounter-Gruppe", Stückzahlen)
+stammen aus derselben ursprünglich fehlerhaften Recherche und sind
+NICHT von Erik/Matthias verifiziert. Als vorläufig behandeln, nicht
+als gesicherte Fakten präsentieren, bis bestätigt.
+
+
+--------------------------------------------------------------------
+3. WICHTIGE LINKS
+--------------------------------------------------------------------
+Live-Website:        https://lithothek-website.pages.dev
+GitHub-Repo:          https://github.com/Erikemmer/lithothek-website
+README (im Repo):     https://github.com/Erikemmer/lithothek-website/blob/main/README.md
+Lokaler Projektordner: /Users/erikemmer/Documents/Website Mineralien
+
+Notion-Hub (Startpunkt): https://app.notion.com/p/3b74cb500cc4816fb377fd11443ab688
+  -> Projektkontext (für KI):  https://app.notion.com/p/3b74cb500cc481818ac0e82755bd62e4
+  -> Aufgaben & offene Fragen: https://app.notion.com/p/ee4eb983ee4b4812a7aeb547d08ee12d
+     (Data Source ID: f16fd94c-dba2-4e81-b651-e83510d30a97)
+  -> Projektüberblick:         https://app.notion.com/p/3b74cb500cc4813d824af8e12c20aea8
+  -> Team & Mitarbeit:         https://app.notion.com/p/3b74cb500cc48109a30de782cb108b25
+  -> Entscheidungsprotokoll:   https://app.notion.com/p/f883b857504343a7b7ddb01aae330ff1
+  -> Ressourcen & Links:       https://app.notion.com/p/3b74cb500cc4811e9e3dc5e4a7381d25
+
+
+--------------------------------------------------------------------
+4. AKTUELLER STAND DER WEBSITE (Code)
+--------------------------------------------------------------------
+Astro-Grundgerüst ist gebaut und live. Seiten (src/pages/):
+  index.astro         - Startseite, Hero-Text, Projekt-Kacheln, News
+  ueber-uns.astro      - Über die Lithothek gGmbH
+  lithothek-online.astro - "Die Lithothek Online" (ehem. Sammlungs-
+                          verwaltung, umbenannt)
+  museum.astro         - Virtuelles Museum
+  projekte.astro        - Projektübersicht
+  sammler/index.astro + [id].astro - Sammler-Steckbriefe (2 von 6
+                          Beispielen angelegt: Kulicke, Bausch)
+  news/index.astro + [id].astro - Neuigkeiten (1 Beispiel-Post)
+  impressum.astro, datenschutz.astro - NUR PLATZHALTER (eckige
+                          Klammern), vor Livegang durch echte
+                          Angaben ersetzen
+
+Content Collections (src/content/, Schema in src/content.config.ts):
+  sammler/, news/, projekte/ (je Markdown-Dateien mit Frontmatter)
+
+Header/Navigation: sticky, externer Mineralienatlas-Link rechts
+(src/components/Header.astro, Styling in src/styles/global.css)
+
+Zwei .removed-Dateien liegen noch in src/content/projekte/
+(mineralienatlas.md.removed, marktplatz.md.removed) - inaktiv,
+werden vom Build ignoriert, können bei Gelegenheit gelöscht werden.
+
+
+--------------------------------------------------------------------
+5. GIT / GITHUB / CLOUDFLARE – STATUS
+--------------------------------------------------------------------
+- Repo ist erstellt, mit main-Branch, verbunden mit Cloudflare Pages
+  (automatisches Deploy bei Push/Merge auf main, Preview-Deploys für
+  Pull Requests sind Standard-Cloudflare-Verhalten).
+- Empfohlener Workflow (siehe Notion "Team & Mitarbeit"): Änderungen
+  über Branches + Pull Request + Review + Merge, NICHT direkt auf
+  main pushen.
+- STAND DER LOKALEN GIT-HISTORIE: Es gibt einen lokalen Commit
+  "d19bd93 CI-Check: verhindert, dass 'Geolitho' wieder in den Code
+  gelangt" (.github/workflows/check-forbidden-terms.yml), der NOCH
+  NICHT gepusht ist. Push schlug fehl: "refusing to allow a Personal
+  Access Token to create or update workflow ... without workflow
+  scope". Lösung: Erik muss entweder (a) den Commit selbst pushen,
+  oder (b) einen GitHub-Token mit "workflow"-Scope bereitstellen,
+  oder (c) die Datei manuell über die GitHub-Weboberfläche anlegen.
+
+
+--------------------------------------------------------------------
+6. TECHNISCHE STOLPERSTEINE (WICHTIG FÜR NEUE AGENT-SITZUNG)
+--------------------------------------------------------------------
+a) Der verbundene lokale Ordner (gemountet über Cowork-Sandbox) lässt
+   KEIN Löschen/Unlinken von Dateien zu (EPERM-Fehler bei rm/mv-
+   Überschreiben). Workaround: Dateien innerhalb desselben
+   Verzeichnisses UMBENENNEN (mv funktioniert), nicht löschen. Für
+   echtes Löschen braucht es den Nutzer (Finder) oder ein Skript,
+   das außerhalb dieses Mounts läuft.
+
+b) Git-Befehle (add/commit/push) auf diesem Mount hinterlassen oft
+   Lock-Dateien (.git/index.lock, HEAD.lock etc.), die den nächsten
+   Git-Befehl blockieren. Funktionierendes Muster vor JEDEM Git-
+   Befehl:
+     find .git -name "*.lock" -exec sh -c 'mv "$1" "$1.old.$$"' _ {} \;
+   Diese Zeile vor add, vor commit, vor push jeweils erneut ausführen
+   (siehe Konversationsverlauf für exakte Befehlsketten).
+
+c) Zum Bauen/Testen des Astro-Projekts (npm install / npm run build)
+   NICHT direkt im gemounteten Ordner ausführen (npm/vite haben dort
+   ähnliche EPERM-Probleme). Stattdessen mit rsync nach /tmp kopieren
+   (ohne node_modules/.astro/dist/.git), dort installieren und bauen,
+   Ergebnis prüfen. Auf dem echten Mac des Nutzers tritt dieses
+   Problem NICHT auf (rein sandboxspezifisch).
+
+d) GitHub-API (api.github.com) und Cloudflare-API (api.cloudflare.com)
+   sind im Sandbox-Netzwerk-Proxy geblockt ("blocked-by-allowlist").
+   Normales Git-Protokoll über github.com (Push/Pull/Clone) FUNKTIONIERT
+   aber. Für alles, was echte API-Calls braucht (Repo per API anlegen,
+   Wrangler-CLI-Deploy), auf Chrome-Browser-Steuerung (Claude in
+   Chrome) oder den Nutzer selbst ausweichen.
+
+e) Für GitHub-Push wurde bisher ein vom Nutzer im Chat geteiltes
+   Personal Access Token verwendet (temporär in Bash-Befehlen, danach
+   Remote-URL wieder auf Klartext zurückgesetzt, Token nie in Dateien
+   gespeichert). Falls kein gültiges Token vorliegt: Nutzer nach einem
+   neuen fragen oder ihn selbst pushen lassen.
+
+
+--------------------------------------------------------------------
+7. CORPORATE IDENTITY – STATUS UND BEWERTUNG
+--------------------------------------------------------------------
+Im Ordner liegen zwei CI-Dokumente:
+  - "Corporate Identity.pdf" (neueste Version, 15 Seiten, professionell
+    gestaltet, Ersteller-Metadaten "Claude")
+  - "Lithothek_Corporate_Identity_v1.1.docx" (frühere/parallele Version)
+  - "CI-Prompt-fuer-ChatGPT.md" (der von uns geschriebene Prompt, der
+    zu diesen Dokumenten geführt hat)
+
+BEWERTUNG DES PDF (bereits geprüft, Seiten 1-15 gelesen):
+Inhaltlich und gestalterisch sehr hochwertig, wirkt wie von einer
+Agentur: Markenkern, Logo-Regeln, Farbwelt (8 Farben mit Hex/RGB/CMYK
++ Kontrastregeln), Typografie (Cormorant Garamond + Inter, volle
+Hierarchie), Bildsprache, Icon-Stil, Tonalität mit Beispielsätzen,
+UI-Komponenten, zwei Seiten-Mockups, Cheat-Sheet am Ende. KEINE
+Geolitho-Erwähnung, KEIN Marktplatz, KEIN Mineralienatlas als
+Projektkachel – besteht also den kritischen Check.
+
+WICHTIGE OFFENE DISKREPANZ, DIE NOCH ZU KLÄREN IST:
+Die im CI-Dokument gezeigte Navigation/Informationsarchitektur
+("Sammlung, Museum, Forschung, Über uns" + separater Button
+"Online-Archiv", Domain "lithothek.de") weicht von der TATSÄCHLICH
+bereits gebauten Website-Navigation ab (Start, Über uns, Die
+Lithothek Online, Virtuelles Museum, Projekte, Sammler-Steckbriefe,
+Neuigkeiten, Domain lithothek-website.pages.dev). Ebenso schlägt das
+CI-Dokument eine andere Code-/Ordnerstruktur vor (styles/tokens.css,
+components/Wordmark.astro, Card.astro, SpecimenTile.astro,
+content/specimens/), die NICHT der aktuell implementierten Struktur
+entspricht (aktuell: src/styles/global.css, components/Header.astro,
+Footer.astro, content/sammler/, content/news/, content/projekte/).
+
+EMPFEHLUNG / NÄCHSTER SCHRITT: Mit Erik klären, ob (a) die bestehende
+Seitenstruktur an die CI-Vorschläge angepasst wird, oder (b) das CI-
+Dokument nachträglich an die bereits gebaute Struktur angepasst wird
+(z. B. Umbenennung "Online-Archiv" -> "Die Lithothek Online" in der
+CI, Navigationseinträge angleichen). Farben/Typografie/Tonalität aus
+dem CI-Dokument sind unabhängig davon direkt übernehmbar und sollten
+als nächstes in src/styles/global.css als CSS-Variablen (Design
+Tokens) eingebaut werden – das CI-Dokument selbst empfiehlt genau das
+(Seite 13/14, "Empfohlene Design Tokens").
+
+Noch nicht erledigt: CI-Dokument ist in Notion "Ressourcen & Links"
+NICHT verlinkt (Datei liegt nur lokal) – nachtragen.
+
+
+--------------------------------------------------------------------
+8. NOTION-DATENBANK "AUFGABEN & OFFENE FRAGEN" – SCHEMA
+--------------------------------------------------------------------
+Spalten: Aufgabe (Titel), Bereich (Select), Typ (Aufgabe/Offene
+Frage), Status (Not started/In progress/Done), Priorität (Hoch/
+Mittel/Niedrig), Verantwortlich (Person-Property, kann echte Notion-
+Nutzer zuweisen), Deadline (Datum), Notizen (Text).
+Views: Default (Table), "Board nach Status", "Offene Fragen"
+(gefiltert auf Typ=Offene Frage, sortiert nach Status/Bereich).
+Ist bereits weitgehend aktuell gehalten (Stand 09.08.2026): erledigte
+und überholte Punkte (CMS-Wahl, Marktplatz-Frage) sind als Done
+markiert, mehrere bereits im Code umgesetzte Aufgaben stehen auf
+"In progress" statt "Not started".
+
+
+--------------------------------------------------------------------
+9. OFFENE PUNKTE / NÄCHSTE SCHRITTE (Priorität von oben nach unten)
+--------------------------------------------------------------------
+1. CI-Check-Workflow pushen (siehe Punkt 5) oder Alternative klären.
+2. Diskrepanz Website-Struktur vs. CI-Dokument klären (siehe Punkt 7).
+3. Design Tokens (Farben/Fonts) aus CI-Dokument in global.css
+   übernehmen, sobald Struktur-Frage geklärt ist.
+4. CI-PDF in Notion "Ressourcen & Links" verlinken.
+5. Restliche offene Fragen in der Aufgaben-Datenbank abarbeiten
+   (Budget/Zeitrahmen, Sammler-Einwilligungen, Spendenfunktion, wer
+   pflegt Inhalte langfristig, Mehrsprachigkeit, Live-Einbindung der
+   Lithothek Online vs. nur Link).
+6. Impressum/Datenschutz mit echten Angaben befüllen (aktuell
+   Platzhalter in eckigen Klammern).
+7. .git-broken-Ordner im Projektverzeichnis kann von Erik manuell im
+   Finder gelöscht werden (Sandbox kann das nicht, siehe Punkt 6a).
+8. Matthias' Rolle/Name in Notion "Team & Mitarbeit" noch als
+   Platzhalter eingetragen – ergänzen.
+
+
+====================================================================
+ENDE DES ÜBERGABEDOKUMENTS
+====================================================================
