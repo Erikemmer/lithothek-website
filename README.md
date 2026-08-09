@@ -1,10 +1,10 @@
 # Lithothek gGmbH – Website
 
-Neue Website der Lithothek / Geolitho Stiftung gGmbH, gebaut mit [Astro](https://astro.build)
+Neue Website der Lithothek gGmbH, gebaut mit [Astro](https://astro.build)
 und gedacht für den Betrieb via [Cloudflare Pages](https://pages.cloudflare.com/).
 
 Der inhaltliche Plan (Aufgaben & offene Fragen) liegt in Notion:
-„Lithothek gGmbH – Website Projektplan“.
+„Lithothek gGmbH – Website-Projekt“.
 
 ## Struktur
 
@@ -69,6 +69,6 @@ ansehen, bevor sie live geht. Nach Review/Freigabe: **Merge** → automatischer 
 
 ## Offene inhaltliche Punkte
 
-Siehe Notion-Datenbank „Lithothek gGmbH – Website Projektplan“, Spalte „Typ = Offene Frage“ –
+Siehe Notion-Datenbank „Lithothek gGmbH – Website-Projekt“, Spalte „Typ = Offene Frage“ –
 u. a. CMS-Entscheidung, Budget/Zeitrahmen, Einwilligungen für Sammler-Steckbriefe, Corporate
 Design, Spendenfunktion.
