@@ -1,0 +1,50 @@
+---
+/*
+ * Typografische Wortmarke „DIE / LITHOTHEK" (CI Kapitel 02).
+ * Kein grafisches Signet — Wirkung entsteht aus Typografie und Proportion.
+ *
+ * Varianten:
+ *  - default: „DIE" gesperrt über „LITHOTHEK", optional mit Subline
+ *  - short:   nur „LITHOTHEK" (für sehr kleine Flächen)
+ */
+interface Props {
+  variant?: 'default' | 'short';
+  subline?: boolean;
+}
+const { variant = 'default', subline = false } = Astro.props;
+---
+<span class="wordmark" data-variant={variant}>
+  {variant === 'default' && <span class="wordmark-die">D&thinsp;I&thinsp;E</span>}
+  <span class="wordmark-name">LITHOTHEK</span>
+  {subline && variant === 'default' && (
+    <span class="wordmark-subline">der Münchner Micromounter</span>
+  )}
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.05;
+    text-decoration: none;
+  }
+  .wordmark-die {
+    font-family: var(--font-sans);
+    font-size: 0.55em;
+    font-weight: 500;
+    letter-spacing: 0.45em;
+  }
+  .wordmark-name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .wordmark-subline {
+    font-family: var(--font-sans);
+    font-size: 0.42em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    margin-top: 0.25em;
+  }
+</style>
