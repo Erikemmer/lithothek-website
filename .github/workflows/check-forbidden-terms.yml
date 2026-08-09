@@ -1,0 +1,48 @@
+name: Verbotene Begriffe prüfen
+
+# Schützt die Website davor, dass fremde/entfernte Begriffe versehentlich
+# wieder in den veröffentlichten Inhalt gelangen.
+# Hintergrund siehe Notion-Entscheidungsprotokoll:
+#  - "Geolitho" ist eine fremde, nicht verbundene Firma -> darf nicht vorkommen
+#  - "Marktplatz" wurde vollständig aus der Website entfernt
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check-forbidden-terms:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Auf verbotene Begriffe prüfen
+        run: |
+          # Nur aktive Website-Inhalte prüfen (src/).
+          # Deaktivierte Dateien (*.removed) und dieser Workflow selbst
+          # sind bewusst ausgenommen.
+          PATTERN='geolitho|marktplatz'
+          echo "Suche nach verbotenen Begriffen: $PATTERN"
+
+          MATCHES=$(grep -rniE "$PATTERN" src \
+            --include='*.astro' \
+            --include='*.md' \
+            --include='*.mdx' \
+            --include='*.ts' \
+            --include='*.js' \
+            --include='*.css' \
+            --include='*.html' \
+            2>/dev/null || true)
+
+          if [ -n "$MATCHES" ]; then
+            echo "::error::Verbotene Begriffe im aktiven Website-Inhalt gefunden!"
+            echo "$MATCHES"
+            echo ""
+            echo "Bitte entfernen. Hintergrund: Notion-Entscheidungsprotokoll."
+            exit 1
+          fi
+
+          echo "OK - keine verbotenen Begriffe im aktiven Inhalt gefunden."
