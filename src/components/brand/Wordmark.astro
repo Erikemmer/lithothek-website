@@ -1,7 +1,10 @@
 ---
 /*
- * Typografische Wortmarke „DIE / LITHOTHEK" (CI Kapitel 02).
+ * Typografische Wortmarke „DIE / LITHOTHEK" (CI Kapitel 02, Muster 4
+ * „Minimal & Strukturiert"): beide Zeilen in der Serifenschrift,
+ * „DIE" stark gesperrt und zentriert über „LITHOTHEK".
  * Kein grafisches Signet — Wirkung entsteht aus Typografie und Proportion.
+ * Farbe kommt vom Kontext: Gold auf dunklen Flächen, Tinte auf hellen.
  *
  * Varianten:
  *  - default: „DIE" gesperrt über „LITHOTHEK", optional mit Subline
@@ -14,7 +17,7 @@ interface Props {
 const { variant = 'default', subline = false } = Astro.props;
 ---
 <span class="wordmark" data-variant={variant}>
-  {variant === 'default' && <span class="wordmark-die">D&thinsp;I&thinsp;E</span>}
+  {variant === 'default' && <span class="wordmark-die">DIE</span>}
   <span class="wordmark-name">LITHOTHEK</span>
   {subline && variant === 'default' && (
     <span class="wordmark-subline">der Münchner Micromounter</span>
@@ -25,26 +28,31 @@ const { variant = 'default', subline = false } = Astro.props;
   .wordmark {
     display: inline-flex;
     flex-direction: column;
-    line-height: 1.05;
+    align-items: center;
+    line-height: 1.1;
     text-decoration: none;
+    text-align: center;
   }
   .wordmark-die {
-    font-family: var(--font-sans);
-    font-size: 0.55em;
-    font-weight: 500;
-    letter-spacing: 0.45em;
+    font-family: var(--font-serif);
+    font-size: 0.52em;
+    font-weight: 600;
+    letter-spacing: 0.62em;
+    /* Sperrung optisch ausgleichen (letzter Buchstabe trägt auch Abstand) */
+    margin-right: -0.62em;
   }
   .wordmark-name {
     font-family: var(--font-serif);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.14em;
+    margin-right: -0.14em;
   }
   .wordmark-subline {
     font-family: var(--font-sans);
-    font-size: 0.42em;
+    font-size: 0.38em;
     font-weight: 400;
     letter-spacing: 0.08em;
     opacity: 0.85;
-    margin-top: 0.25em;
+    margin-top: 0.35em;
   }
 </style>

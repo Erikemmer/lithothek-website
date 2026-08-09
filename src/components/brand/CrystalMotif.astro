@@ -1,0 +1,66 @@
+---
+/*
+ * Reduzierte Kristall-Linienzeichnung (CI Kapitel 06: Icon- & Illustrationsstil).
+ * Dient als eleganter Platzhalter für Bildflächen (Hero, Karten), bis echte
+ * Sammlungsfotos vorliegen — bewusst KEINE fotorealistische KI-Grafik
+ * (laut CI verboten als Ersatz für echte Objekte).
+ *
+ * Varianten:
+ *  - hero:  große Kristallgruppe, für die Startseiten-Bühne
+ *  - card:  kompakteres Motiv für Kartenköpfe
+ */
+interface Props {
+  variant?: 'hero' | 'card';
+  /** Nummer 1–4 variiert das Motiv leicht (Rotation/Spiegelung) */
+  seed?: number;
+}
+const { variant = 'card', seed = 1 } = Astro.props;
+const flip = seed % 2 === 0;
+const rotate = ((seed * 7) % 10) - 5;
+---
+<div
+  class={`crystal-motif crystal-motif--${variant}`}
+  aria-hidden="true"
+  style={`--motif-flip:${flip ? -1 : 1}; --motif-rot:${rotate}deg;`}
+>
+  <svg viewBox="0 0 420 300" fill="none" preserveAspectRatio="xMidYMax meet">
+    <g stroke="var(--gold)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <!-- Basisgestein -->
+      <path d="M20 280 L90 250 L180 268 L260 246 L340 266 L400 252" opacity="0.55" />
+      <path d="M60 280 L130 262 L210 276 L300 258 L380 272" opacity="0.3" />
+      <!-- Großer Hauptkristall -->
+      <path d="M210 258 L186 120 L206 44 L232 116 L226 258" opacity="0.95" />
+      <path d="M206 44 L210 120 L214 258" opacity="0.45" />
+      <path d="M186 120 L210 120 L232 116" opacity="0.45" />
+      <!-- Zweiter Kristall, geneigt -->
+      <path d="M256 262 L272 140 L296 92 L306 150 L282 262" opacity="0.8" />
+      <path d="M296 92 L288 148 L272 262" opacity="0.35" />
+      <path d="M272 140 L288 148 L306 150" opacity="0.35" />
+      <!-- Dritter Kristall, klein links -->
+      <path d="M158 266 L146 176 L164 132 L182 180 L174 266" opacity="0.7" />
+      <path d="M164 132 L166 180 L166 266" opacity="0.3" />
+      <!-- Kleine Nebenkristalle -->
+      <path d="M118 270 L112 216 L126 194 L138 222 L130 270" opacity="0.5" />
+      <path d="M318 268 L316 210 L330 186 L342 214 L334 268" opacity="0.5" />
+      <path d="M96 274 L94 244 L104 232 L112 248 L108 274" opacity="0.35" />
+      <path d="M354 270 L354 240 L364 228 L372 244 L368 270" opacity="0.35" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .crystal-motif {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .crystal-motif svg {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(var(--motif-flip)) rotate(var(--motif-rot));
+    transform-origin: bottom center;
+  }
+  .crystal-motif--hero svg { max-height: 320px; }
+  .crystal-motif--card svg { max-height: 160px; }
+</style>
