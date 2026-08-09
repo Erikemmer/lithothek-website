@@ -6,13 +6,16 @@ const projekte = (await getCollection('projekte')).sort((a, b) => a.data.reihenf
 const news = (await getCollection('news')).sort((a, b) => b.data.datum.valueOf() - a.data.datum.valueOf()).slice(0, 3);
 ---
 <BaseLayout title="Start">
-  <section class="hero">
-    <h1>Lithothek gGmbH</h1>
+  <section class="hero on-dark">
+    <p class="kicker">Der Mikromineralogie ein Gesicht geben</p>
+    <h1>Willkommen in der Lithothek</h1>
     <p class="lead">
-      Die Lithothek gGmbH fördert die Volksbildung auf dem Gebiet der Mineralogie,
-      Lagerstättenkunde, Geologie, Paläontologie und des Bergbaus – durch das Betreiben und
-      die Förderung erdwissenschaftlicher Projekte.
+      Die Lithothek macht Mineralien im Kleinen sichtbar. Wir bewahren, dokumentieren und
+      vermitteln Objekte, Fundorte und das Wissen der Menschen, die sich mit ihnen
+      beschäftigen. Die Lithothek gGmbH fördert damit die Volksbildung auf dem Gebiet der
+      Mineralogie, Lagerstättenkunde, Geologie, Paläontologie und des Bergbaus.
     </p>
+    <a class="button" href="/lithothek-online/">Sammlung entdecken</a>
   </section>
 
   <section>
