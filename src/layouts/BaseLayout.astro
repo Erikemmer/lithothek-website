@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CrystalMotif from '../components/brand/CrystalMotif.astro';
 
 // Selbst gehostete CI-Schriften (Fontsource) — kein externes Font-CDN,
 // damit keine personenbezogenen Daten an Dritte fließen (DSGVO).
@@ -14,17 +15,23 @@ interface Props {
   description?: string;
   /** true: Seite steuert ihre Breite selbst (z. B. Startseite mit vollflächigem Hero) */
   fullWidth?: boolean;
+  /** Unterseiten-Vorlage (CI Kapitel 11): dunkles Kopfband mit Kicker, Titel, Lead */
+  pageTitle?: string;
+  kicker?: string;
+  lead?: string;
 }
 
 const {
   title,
   description = 'Lithothek gGmbH – Sammlung, Museum und Projekte rund um Mineralien.',
   fullWidth = false,
+  pageTitle,
+  kicker,
+  lead,
 } = Astro.props;
 
 /*
- * Brotkrumen-Navigation (Layout-Vorbild: Design-Zielbild 08/2026).
- * Wird automatisch aus dem Pfad erzeugt; die Startseite zeigt keine.
+ * Brotkrumen-Navigation: automatisch aus dem Pfad; die Startseite zeigt keine.
  */
 const labels: Record<string, string> = {
   'ueber-uns': 'Über uns',
@@ -45,7 +52,7 @@ const crumbs = segments.map((seg, i) => ({
       .replace(/\b\p{L}/gu, (c) => c.toUpperCase()),
   href: '/' + segments.slice(0, i + 1).join('/') + '/',
 }));
-const showCrumbs = !fullWidth && crumbs.length > 0;
+const showCrumbs = crumbs.length > 0;
 ---
 <!doctype html>
 <html lang="de">
@@ -57,8 +64,32 @@ const showCrumbs = !fullWidth && crumbs.length > 0;
   </head>
   <body>
     <Header />
-    <main class={fullWidth ? undefined : 'wrap'}>
-      {showCrumbs && (
+    {pageTitle && (
+      <div class="page-header on-dark">
+        <div class="page-header-motif" aria-hidden="true">
+          <CrystalMotif variant="hero" seed={segments.length + 1} />
+        </div>
+        <div class="wrap page-header-inner">
+          {showCrumbs && (
+            <nav class="crumbs crumbs--dark" aria-label="Brotkrumen">
+              <ol>
+                <li><a href="/">Startseite</a></li>
+                {crumbs.map((c, i) => (
+                  <li>
+                    {i < crumbs.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+          {kicker && <p class="kicker">{kicker}</p>}
+          <h1 class="page-title">{pageTitle}</h1>
+          {lead && <p class="page-lead">{lead}</p>}
+        </div>
+      </div>
+    )}
+    <main class={fullWidth || pageTitle ? undefined : 'wrap'}>
+      {!pageTitle && !fullWidth && showCrumbs && (
         <nav class="crumbs" aria-label="Brotkrumen">
           <ol>
             <li><a href="/">Startseite</a></li>
@@ -70,7 +101,13 @@ const showCrumbs = !fullWidth && crumbs.length > 0;
           </ol>
         </nav>
       )}
-      <slot />
+      {pageTitle ? (
+        <div class="wrap">
+          <slot />
+        </div>
+      ) : (
+        <slot />
+      )}
     </main>
     <Footer />
   </body>
