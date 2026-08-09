@@ -1,22 +1,206 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+/*
+ * „Die Lithothek Online" — Sammlungsansicht (Layout-Vorbild: Design-Zielbild 08/2026).
+ * Alle Zahlen werden aus der Objekt-Collection berechnet, nichts ist erfunden.
+ * Solange Demo-Einträge (demo: true) enthalten sind, kennzeichnet ein Hinweis
+ * die Ansicht deutlich als Beispiel.
+ */
+const objekte = (await getCollection('objekte')).sort(
+  (a, b) => b.data.datum.valueOf() - a.data.datum.valueOf()
+);
+const istDemo = objekte.some((o) => o.data.demo);
+
+const anzahlObjekte = objekte.length;
+const anzahlLaender = new Set(objekte.map((o) => o.data.land)).size;
+const anzahlMineralarten = new Set(objekte.map((o) => o.data.mineral)).size;
+const anzahlSammler = new Set(objekte.map((o) => o.data.sammler)).size;
+
+/* Kristall-Farbton je Kategorie (Objektbilder dürfen mineralisch bunt sein;
+   Flächen und Typografie bleiben in der CI-Palette). */
+const farben: Record<string, string> = {
+  Molybdate: '#c2763a',
+  Carbonate: '#a9b8bf',
+  Phosphate: '#6f9e6b',
+  Sulfate: '#d0b268',
+  Halogenide: '#7b6fae',
+  Silikate: '#4f6d68',
+  Oxide: '#8c5d3f',
+  Sonstige: '#7c6845',
+};
+
+/* Kategorienverteilung für das Donut-Diagramm */
+const kategorien = [...new Set(objekte.map((o) => o.data.kategorie))];
+const verteilung = kategorien
+  .map((k) => ({
+    kategorie: k,
+    anzahl: objekte.filter((o) => o.data.kategorie === k).length,
+    farbe: farben[k] ?? farben.Sonstige,
+  }))
+  .sort((a, b) => b.anzahl - a.anzahl);
+
+const RADIUS = 54;
+const UMFANG = 2 * Math.PI * RADIUS;
+let offset = 0;
+const segmente = verteilung.map((v) => {
+  const anteil = v.anzahl / (anzahlObjekte || 1);
+  const seg = { ...v, anteil, laenge: anteil * UMFANG, offset };
+  offset += anteil * UMFANG;
+  return seg;
+});
+
+const stats = [
+  { wert: anzahlObjekte, label: anzahlObjekte === 1 ? 'Objekt' : 'Objekte' },
+  { wert: anzahlLaender, label: anzahlLaender === 1 ? 'Land' : 'Länder' },
+  { wert: anzahlMineralarten, label: 'Mineralarten' },
+  { wert: anzahlSammler, label: 'Sammler' },
+];
 ---
 <BaseLayout title="Die Lithothek Online">
-  <section class="hero on-dark">
-    <p class="kicker">Digitale Sammlung</p>
-    <h1>Die Lithothek Online</h1>
-    <p class="lead">
-      Objekte dokumentieren. Zusammenhänge entdecken. Wissen dauerhaft zugänglich machen.
-    </p>
-  </section>
+  <p class="kicker">Digitale Sammlung</p>
+  <h1>Die Lithothek Online</h1>
+  <p class="lead-sub">
+    Die Sammlungsverwaltung erfasst, dokumentiert und verwaltet unsere Objekte digital.
+    Sie ermöglicht Forschung, Austausch und langfristigen Erhalt.
+  </p>
 
-  <p>
-    Über die Lithothek Online kannst du die Objekte unserer Sammlung durchsuchen – nach
-    Mineral, Fundort oder Spender. Die Daten stehen allen offen zur Verfügung.
-  </p>
-  <p>
-    <strong>Platzhalter:</strong> Hier wird der Zugang zur Lithothek Online eingebunden
-    oder verlinkt, sobald geklärt ist, ob eine Live-Einbindung (API/iFrame) erfolgt oder
-    zunächst nur ein Link auf das externe Tool gesetzt wird (siehe offene Frage im Projektplan).
-  </p>
+  {istDemo && (
+    <p class="demo-note">
+      <strong>Demoansicht:</strong> Alle Objekte, Namen und Zahlen auf dieser Seite sind
+      Beispieldaten zur Abstimmung des Layouts. Sie werden durch die echte Sammlung ersetzt.
+    </p>
+  )}
+
+  <div class="stats-row">
+    {stats.map((s) => (
+      <div class="stat">
+        <span class="stat-wert">{s.wert.toLocaleString('de-DE')}</span>
+        <span class="stat-label">{s.label}</span>
+      </div>
+    ))}
+  </div>
+
+  <div class="collection-grid">
+    <div class="collection-main">
+      <section class="panel">
+        <h2 class="panel-title">Objekte durchsuchen</h2>
+        <form class="search-demo" aria-label="Objektsuche (Demo)">
+          <input
+            type="search"
+            placeholder="Suche nach Mineral, Fundort, Sammler …"
+            disabled
+            title="Die Suche wird mit der echten Datenbank freigeschaltet."
+          />
+          <div class="search-filters">
+            <select disabled aria-label="Mineral"><option>Alle Mineralien</option></select>
+            <select disabled aria-label="Sammler"><option>Alle Sammler</option></select>
+            <select disabled aria-label="Kategorie"><option>Alle Kategorien</option></select>
+          </div>
+          <p class="search-hint">Suche und Filter werden mit der echten Datenbank freigeschaltet.</p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">Zuletzt hinzugefügte Objekte</h2>
+        <div class="obj-table-wrap">
+          <table class="obj-table">
+            <thead>
+              <tr>
+                <th scope="col">Mineral</th>
+                <th scope="col">Fundort</th>
+                <th scope="col">Sammler</th>
+                <th scope="col">Kategorie</th>
+                <th scope="col">Datum</th>
+              </tr>
+            </thead>
+            <tbody>
+              {objekte.map((o) => (
+                <tr>
+                  <td class="obj-mineral">
+                    <span class="obj-thumb" aria-hidden="true">
+                      <svg viewBox="0 0 40 40" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                        <g stroke={farben[o.data.kategorie] ?? farben.Sonstige} stroke-width="1.5">
+                          <path d="M8 33 L20 29 L33 33" opacity="0.6" />
+                          <path d="M19 31 L15 15 L20 7 L24 16 L23 31" fill={(farben[o.data.kategorie] ?? farben.Sonstige) + '22'} />
+                          <path d="M26 31 L27 19 L31 14 L33 21 L30 31" opacity="0.75" />
+                          <path d="M12 32 L11 22 L14 17 L17 23 L15 32" opacity="0.6" />
+                        </g>
+                      </svg>
+                    </span>
+                    <strong>{o.data.mineral}</strong>
+                  </td>
+                  <td>{o.data.fundort}, {o.data.land}</td>
+                  <td>{o.data.sammler}</td>
+                  <td>{o.data.kategorie}</td>
+                  <td>{o.data.datum.toLocaleDateString('de-DE')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <aside class="collection-side">
+      <section class="panel">
+        <h2 class="panel-title">Sammlung nach Kategorien</h2>
+        <div class="donut-wrap">
+          <svg viewBox="0 0 140 140" role="img" aria-label="Verteilung der Sammlung nach Mineralkategorien">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="var(--warm-sand)" stroke-width="16" opacity="0.35" />
+            {segmente.map((s) => (
+              <circle
+                cx="70" cy="70" r="54" fill="none"
+                stroke={s.farbe} stroke-width="16"
+                stroke-dasharray={`${Math.max(s.laenge - 1.5, 0.5)} ${UMFANG}`}
+                stroke-dashoffset={-s.offset}
+                transform="rotate(-90 70 70)"
+              />
+            ))}
+          </svg>
+          <ul class="legend">
+            {segmente.map((s) => (
+              <li>
+                <span class="legend-dot" style={`background:${s.farbe}`} aria-hidden="true"></span>
+                {s.kategorie}
+                <span class="legend-pct">{Math.round(s.anteil * 100)}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">Aktivität</h2>
+        <ul class="activity">
+          {objekte.slice(0, 5).map((o) => (
+            <li>
+              <span class="meta activity-date">{o.data.datum.toLocaleDateString('de-DE')}</span>
+              Neues Objekt: {o.data.mineral} ({o.data.land})
+            </li>
+          ))}
+        </ul>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card-grid" style="margin-top:2.5rem;">
+    <div class="card">
+      <h3>Dokumentation</h3>
+      <p>Detaillierte Erfassung aller relevanten Daten zu jedem Objekt.</p>
+    </div>
+    <div class="card">
+      <h3>Forschung</h3>
+      <p>Datenbasis für wissenschaftliche Auswertungen und Publikationen.</p>
+    </div>
+    <div class="card">
+      <h3>Langzeitarchivierung</h3>
+      <p>Sichere Speicherung für kommende Generationen.</p>
+    </div>
+    <div class="card">
+      <h3>Community</h3>
+      <p>Gemeinsame Datenbasis für Sammler und Forscher.</p>
+    </div>
+  </section>
 </BaseLayout>
