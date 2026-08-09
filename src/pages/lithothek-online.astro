@@ -120,14 +120,18 @@ const stats = [
                 <tr>
                   <td class="obj-mineral">
                     <span class="obj-thumb" aria-hidden="true">
-                      <svg viewBox="0 0 40 40" fill="none" stroke-linejoin="round" stroke-linecap="round">
-                        <g stroke={farben[o.data.kategorie] ?? farben.Sonstige} stroke-width="1.5">
-                          <path d="M8 33 L20 29 L33 33" opacity="0.6" />
-                          <path d="M19 31 L15 15 L20 7 L24 16 L23 31" fill={(farben[o.data.kategorie] ?? farben.Sonstige) + '22'} />
-                          <path d="M26 31 L27 19 L31 14 L33 21 L30 31" opacity="0.75" />
-                          <path d="M12 32 L11 22 L14 17 L17 23 L15 32" opacity="0.6" />
-                        </g>
-                      </svg>
+                      {o.data.bild ? (
+                        <img src={o.data.bild} alt="" loading="lazy" />
+                      ) : (
+                        <svg viewBox="0 0 40 40" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                          <g stroke={farben[o.data.kategorie] ?? farben.Sonstige} stroke-width="1.5">
+                            <path d="M8 33 L20 29 L33 33" opacity="0.6" />
+                            <path d="M19 31 L15 15 L20 7 L24 16 L23 31" fill={(farben[o.data.kategorie] ?? farben.Sonstige) + '22'} />
+                            <path d="M26 31 L27 19 L31 14 L33 21 L30 31" opacity="0.75" />
+                            <path d="M12 32 L11 22 L14 17 L17 23 L15 32" opacity="0.6" />
+                          </g>
+                        </svg>
+                      )}
                     </span>
                     <strong>{o.data.mineral}</strong>
                   </td>
