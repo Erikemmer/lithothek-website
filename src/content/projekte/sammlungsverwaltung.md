@@ -1,5 +1,5 @@
 ---
-titel: "Sammlungsverwaltung Geolitho"
-kurzbeschreibung: "Modernes Tool zum Erfassen von Objektdaten. Weltweiter Zugriff ermöglicht die Zusammenarbeit mit Spenderinnen und Spendern von überall und zu jeder Zeit."
-reihenfolge: 3
+titel: "Die Lithothek Online"
+kurzbeschreibung: "Unser digitales Verzeichnis der Sammlung. Weltweiter Zugriff ermöglicht die Zusammenarbeit mit Spenderinnen und Spendern von überall und zu jeder Zeit."
+reihenfolge: 2
 ---

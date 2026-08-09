@@ -27,29 +27,45 @@ npm run build     # Produktions-Build nach dist/
 npm run preview   # Build lokal testen
 ```
 
-## Nächste Schritte: GitHub
+## Status
 
-1. Auf [github.com](https://github.com) ein neues, leeres Repository anlegen
-   (z. B. `lithothek-website`), **ohne** README/Lizenz/.gitignore (die gibt es hier schon).
-2. Im Projektordner:
+- GitHub: [github.com/Erikemmer/lithothek-website](https://github.com/Erikemmer/lithothek-website)
+- Cloudflare Pages: mit dem Repo verbunden, automatisches Deploy bei jedem Push auf `main`
+- Live: [lithothek-website.pages.dev](https://lithothek-website.pages.dev)
 
-   ```bash
-   git remote add origin https://github.com/<dein-github-name>/lithothek-website.git
-   git branch -M main
-   git push -u origin main
-   ```
+## Zusammenarbeit (mehrere Personen)
 
-## Nächste Schritte: Cloudflare Pages
+Jede Person arbeitet mit ihrer eigenen Claude/Cowork-Session auf einem eigenen, lokal
+geklonten Ordner. Es gibt keine geteilte Session – Zusammenarbeit läuft über das
+gemeinsame GitHub-Repo.
 
-1. Im [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** →
-   **Create application** → **Pages** → **Connect to Git**.
-2. Das eben erstellte GitHub-Repo auswählen und Zugriff autorisieren.
-3. Build-Einstellungen:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. **Save and Deploy** – Cloudflare baut und deployt bei jedem Push auf `main` automatisch.
-5. Optional: eigene Domain unter **Custom domains** verbinden.
+**Einmalig einrichten (Repo-Owner):**
+
+1. Kollegen als Collaborator einladen: Repo → **Settings → Collaborators and teams →
+   Add people** ([direkter Link](https://github.com/Erikemmer/lithothek-website/settings/access)).
+2. Branch-Schutz für `main` aktivieren, damit nichts versehentlich direkt live geht:
+   **Settings → Branches → Add branch protection rule** → Branch name pattern `main` →
+   „Require a pull request before merging" aktivieren
+   ([direkter Link](https://github.com/Erikemmer/lithothek-website/settings/branches)).
+3. Notion-Projektplan „Lithothek gGmbH – Website Projektplan" mit dem Kollegen teilen
+   (Notion → Share → per E-Mail einladen).
+
+**Workflow pro Änderung (jede Person):**
+
+```bash
+git clone https://github.com/Erikemmer/lithothek-website.git
+cd lithothek-website
+git checkout -b meine-aenderung
+# Änderungen machen, dann:
+git add -A
+git commit -m "Kurze Beschreibung der Änderung"
+git push -u origin meine-aenderung
+```
+
+Danach auf GitHub einen **Pull Request** gegen `main` öffnen. Cloudflare Pages baut dafür
+automatisch eine **Vorschau-URL** (Preview Deployment) – die Änderung lässt sich also
+ansehen, bevor sie live geht. Nach Review/Freigabe: **Merge** → automatischer Deploy nach
+`lithothek-website.pages.dev`.
 
 ## Offene inhaltliche Punkte
 
