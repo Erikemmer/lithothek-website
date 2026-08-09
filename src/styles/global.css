@@ -1,48 +1,50 @@
-:root {
-  --color-bg: #faf8f4;
-  --color-text: #211d16;
-  --color-primary: #6b4a2f;
-  --color-accent: #8a9a5b;
-  --color-muted: #75706a;
-  --max-width: 72rem;
-  font-family: "Georgia", "Iowan Old Style", serif;
-}
+/*
+ * Globale Typografie und Grundlayout der Lithothek-Website.
+ * Farb-, Form- und Schrift-Werte kommen ausschließlich aus tokens.css
+ * (Corporate Identity v1.1). Schriften werden selbst gehostet (Fontsource) —
+ * kein externes Font-CDN, damit die Datenschutzerklärung stimmt.
+ */
+@import './tokens.css';
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   background: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.6;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17px, CI: Fließtext 16–18px */
+  line-height: 1.65;    /* CI: 1.55–1.7 */
 }
 
-a { color: var(--color-primary); }
-
-header.site-header {
-  border-bottom: 1px solid #e4ddd0;
-  background: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* Typografische Hierarchie (CI Kapitel 04) */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+h1 { font-size: clamp(2.5rem, 5vw, 3.75rem); }   /* 40–60px */
+h2 { font-size: clamp(1.75rem, 3vw, 2.375rem); } /* 28–38px */
+h3 { font-size: clamp(1.375rem, 2vw, 1.625rem); }/* 22–26px */
+h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.0625rem;
 }
 
-.external-link {
-  flex-shrink: 0;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: bold;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  border-radius: 999px;
-  padding: 0.35rem 0.9rem;
-  white-space: nowrap;
-}
+a { color: var(--bronze); }
+a:hover { color: var(--copper); }
 
-.external-link:hover {
-  background: var(--color-primary);
-  color: #fff;
+/* Meta-Zeilen / Kicker (CI: Inter Medium, erhöhtes Tracking) */
+.meta, .kicker {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
+.kicker { color: var(--color-accent); }
 
 .wrap {
   max-width: var(--max-width);
@@ -50,59 +52,150 @@ header.site-header {
   padding: 1rem 1.5rem;
 }
 
+/* ---------- Header (CI: dunkle Fläche für Orientierung) ---------- */
+header.site-header {
+  background: var(--color-dark);
+  color: var(--ivory);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(182, 154, 99, 0.35); /* Gold-Linie */
+}
+
 nav.main-nav ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem;
+  gap: 1.4rem;
   margin: 0;
   padding: 0;
 }
 
 nav.main-nav a {
   text-decoration: none;
-  color: var(--color-text);
-  font-size: 0.95rem;
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+nav.main-nav a:hover { color: var(--color-accent); }
+
+.external-link {
+  flex-shrink: 0;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-button);
+  padding: 0.35rem 0.9rem;
+  white-space: nowrap;
+}
+.external-link:hover {
+  background: var(--color-accent);
+  color: var(--color-dark);
 }
 
-nav.main-nav a:hover { color: var(--color-primary); }
+/* ---------- Buttons (CI Kapitel 08) ---------- */
+.button,
+.button-secondary {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: var(--radius-button);
+  padding: 0.65rem 1.5rem;
+}
+.button {
+  background: var(--color-dark);
+  color: var(--ivory);
+  border: 1px solid var(--color-dark);
+}
+.button:hover { background: var(--charcoal); color: var(--ivory); }
+.button-secondary {
+  background: var(--ivory);
+  color: var(--color-ink);
+  border: 1px solid var(--bronze);
+}
+.button-secondary:hover { background: var(--warm-sand); color: var(--color-ink); }
 
+/* Auf dunklen Flächen: goldener Primärbutton */
+.on-dark .button {
+  background: var(--color-accent);
+  color: var(--color-dark);
+  border-color: var(--color-accent);
+}
+.on-dark .button:hover { background: var(--ivory); border-color: var(--ivory); }
+
+/* ---------- Hero (CI Website-Anwendung 01) ---------- */
 .hero {
-  padding: 3rem 1.5rem;
-  text-align: center;
-  background: linear-gradient(180deg, #fff, var(--color-bg));
+  background: var(--color-dark);
+  color: var(--ivory);
+  border-radius: var(--radius-card);
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  margin: 1.5rem 0 2.5rem;
+  box-shadow: var(--shadow-soft);
+}
+.hero h1 { color: var(--ivory); margin: 0.4rem 0 1rem; }
+.hero p.lead {
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 0 0 1.5rem;
+  color: var(--ivory);
+  opacity: 0.92;
 }
 
-.hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-.hero p.lead { font-size: 1.15rem; color: var(--color-muted); max-width: 40rem; margin: 0 auto; }
-
+/* ---------- Cards (CI Kapitel 08) ---------- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin: 2rem 0;
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #e9e2d4;
-  border-radius: 0.5rem;
-  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--warm-sand);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 1.35rem 1.5rem;
 }
 
 .card h3 { margin-top: 0; }
-
-footer.site-footer {
-  border-top: 1px solid #e4ddd0;
-  margin-top: 3rem;
-  padding: 2rem 1.5rem;
-  font-size: 0.85rem;
-  color: var(--color-muted);
+.card a {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bronze);
 }
+.card a:hover { color: var(--copper); }
+
+/* ---------- Inhalt ---------- */
+main.wrap { padding-top: 1.5rem; padding-bottom: 3rem; }
+
+/* ---------- Footer (CI: dunkle Fläche) ---------- */
+footer.site-footer {
+  background: var(--color-dark);
+  color: var(--ivory);
+  border-top: 1px solid rgba(182, 154, 99, 0.35);
+  margin-top: 3rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+footer.site-footer a { color: var(--warm-sand); }
+footer.site-footer a:hover { color: var(--color-accent); }
 
 footer.site-footer nav ul {
   list-style: none;
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   padding: 0;
 }

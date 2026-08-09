@@ -1,0 +1,37 @@
+/*
+ * Design Tokens der Lithothek gGmbH
+ * Quelle: Corporate Identity v1.1 (August 2026), Kapitel 03, 04 und 09.
+ * Regel aus der CI: CSS Custom Properties für alle CI-Farben —
+ * keine verstreuten Hex-Werte in Komponenten.
+ */
+:root {
+  /* Farbwelt (CI Kapitel 03) */
+  --obsidian: #0f1110;      /* Navigation, Footer, Primärfläche */
+  --ivory: #f3efe6;         /* Seitenhintergrund, Text auf dunkel */
+  --gold: #b69a63;          /* Akzent, CTA, Linien */
+  --warm-sand: #d8cbb3;     /* Sekundärfläche, ruhige Flächen */
+  --mineral-teal: #4f6d68;  /* digitale Aktion, Status, Forschung */
+  --charcoal: #1b1d1b;      /* Text, dunkle Flächen */
+  --bronze: #7c6845;        /* Sekundärakzent */
+  --copper: #8c5d3f;        /* sparsam, mineralische Akzente */
+
+  /* Semantische Tokens (CI Kapitel 09, "Empfohlene Design Tokens") */
+  --color-bg: var(--ivory);
+  --color-surface: #ffffff;
+  --color-ink: var(--charcoal);
+  --color-dark: var(--obsidian);
+  --color-accent: var(--gold);
+  --color-action: var(--mineral-teal);
+
+  /* Form & Tiefe */
+  --radius-card: 12px;
+  --radius-button: 999px;
+  --shadow-soft: 0 8px 28px rgba(15, 17, 16, 0.08);
+
+  /* Typografie (CI Kapitel 04): Serif für Headlines, Sans für Information */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', Inter, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Layout */
+  --max-width: 72rem;
+}
