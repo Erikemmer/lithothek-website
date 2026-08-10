@@ -1,16 +1,30 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CrystalMotif from '../../components/brand/CrystalMotif.astro';
 import { getCollection } from 'astro:content';
 
 const news = (await getCollection('news')).sort((a, b) => b.data.datum.valueOf() - a.data.datum.valueOf());
 ---
-<BaseLayout title="Neuigkeiten">
-  <h1>Neuigkeiten</h1>
-  {news.map((n) => (
-    <article style="margin-bottom:1.5rem;">
-      <h2><a href={`/news/${n.id}/`}>{n.data.titel}</a></h2>
-      <p><em>{n.data.datum.toLocaleDateString('de-DE')}</em></p>
-      {n.data.zusammenfassung && <p>{n.data.zusammenfassung}</p>}
-    </article>
-  ))}
+<BaseLayout
+  title="Neuigkeiten"
+  pageTitle="Aktuelles"
+  kicker="Neues aus der Lithothek"
+  lead="Neuzugänge, Veranstaltungen und Einblicke in die Arbeit an der Sammlung."
+>
+  <div class="card-grid card-grid--media">
+    {news.map((n, i) => (
+      <article class="card card--media">
+        <div class="card-media card-media--news">
+          {n.data.bild
+            ? <img src={n.data.bild} alt="" loading="lazy" />
+            : <CrystalMotif variant="card" seed={i + 2} />}
+        </div>
+        <div class="card-body">
+          <p class="meta">{n.data.datum.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+          <h3 class="card-title-s"><a class="card-title-link" href={`/news/${n.id}/`}>{n.data.titel}</a></h3>
+          {n.data.zusammenfassung && <p class="card-summary">{n.data.zusammenfassung}</p>}
+        </div>
+      </article>
+    ))}
+  </div>
 </BaseLayout>

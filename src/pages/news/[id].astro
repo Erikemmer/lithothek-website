@@ -12,10 +12,12 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const datum = entry.data.datum.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
 ---
-<BaseLayout title={entry.data.titel}>
-  <h1>{entry.data.titel}</h1>
-  <p><em>{entry.data.datum.toLocaleDateString('de-DE')}</em></p>
-  <Content />
-  <p><a href="/news/">← Zurück zu allen Neuigkeiten</a></p>
+<BaseLayout title={entry.data.titel} pageTitle={entry.data.titel} kicker={datum}>
+  {entry.data.bild && <img class="article-img" src={entry.data.bild} alt="" />}
+  <div class="article-body">
+    <Content />
+  </div>
+  <p><a class="section-link" href="/news/">← Alle Nachrichten</a></p>
 </BaseLayout>
