@@ -13,9 +13,14 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
-<BaseLayout title={entry.data.name}>
-  <h1>{entry.data.name}</h1>
-  {entry.data.schwerpunkt && <p><strong>{entry.data.schwerpunkt}</strong></p>}
-  <Content />
-  <p><a href="/sammler/">← Zurück zu allen Steckbriefen</a></p>
+<BaseLayout
+  title={entry.data.name}
+  pageTitle={entry.data.name}
+  kicker="Sammler-Steckbrief"
+  lead={entry.data.schwerpunkt}
+>
+  <div class="article-body">
+    <Content />
+  </div>
+  <p><a class="section-link" href="/sammler/">← Alle Steckbriefe</a></p>
 </BaseLayout>

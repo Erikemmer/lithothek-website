@@ -4,18 +4,22 @@ import { getCollection } from 'astro:content';
 
 const sammler = (await getCollection('sammler')).filter((s) => s.data.veroeffentlicht);
 ---
-<BaseLayout title="Sammler-Steckbriefe">
-  <h1>Sammler-Steckbriefe</h1>
-  <p>
-    Die Lithothek lebt von ihren Sammlerinnen und Sammlern. Hier stellen wir einige der
-    Menschen vor, die mit ihren Spenden zum Aufbau der Sammlung beigetragen haben.
+<BaseLayout
+  title="Sammler-Steckbriefe"
+  pageTitle="Sammler-Steckbriefe"
+  kicker="Gemeinschaft"
+  lead="Die Lithothek lebt von ihren Sammlerinnen und Sammlern. Hier stellen wir einige der Menschen vor, die mit ihren Spenden zum Aufbau der Sammlung beigetragen haben."
+>
+  <p class="demo-note">
+    <strong>Hinweis:</strong> Veröffentlichung nur mit Einwilligung der jeweiligen Person
+    (siehe offene Frage im Projektplan).
   </p>
-  <p><em>Hinweis: Veröffentlichung nur mit Einwilligung der jeweiligen Person (siehe offene Frage im Projektplan).</em></p>
   <div class="card-grid">
     {sammler.map((s) => (
       <div class="card">
-        <h3><a href={`/sammler/${s.id}/`}>{s.data.name}</a></h3>
+        <h3><a class="card-title-link" href={`/sammler/${s.id}/`}>{s.data.name}</a></h3>
         {s.data.schwerpunkt && <p>{s.data.schwerpunkt}</p>}
+        <a href={`/sammler/${s.id}/`}>Zum Steckbrief →</a>
       </div>
     ))}
   </div>
