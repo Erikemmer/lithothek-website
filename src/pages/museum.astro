@@ -1,15 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+/*
+ * Beispielbilder (CC-Platzhalter, Nachweis im Impressum) — werden durch
+ * echte Sammlungsfotos ersetzt, sobald sie vorliegen.
+ */
+const einblicke = [
+  { bild: '/bilder/wulfenit.jpg', titel: 'Wulfenit auf Baryt' },
+  { bild: '/bilder/fluorit.jpg', titel: 'Fluorit auf Quarz' },
+  { bild: '/bilder/pyromorphit.jpg', titel: 'Pyromorphit' },
+  { bild: '/bilder/calcit.jpg', titel: 'Calcit mit Aurichalcit' },
+  { bild: '/bilder/baryt.jpg', titel: 'Baryt' },
+  { bild: '/bilder/epidot.jpg', titel: 'Epidot' },
+];
 ---
-<BaseLayout title="Virtuelles Museum">
-  <h1>Virtuelles Museum</h1>
+<BaseLayout
+  title="Virtuelles Museum"
+  pageTitle="Virtuelles Museum"
+  kicker="Museum & Bildung"
+  lead="Ein virtueller Rundgang zeigt ausgewählte Highlights der Lithothek – von seltenen Mineralarten bis zu besonderen Fundstücken."
+>
   <p>
-    Ein virtueller Rundgang zeigt ausgewählte Highlights der Lithothek – von seltenen
-    Mineralarten bis zu besonderen Fundstücken. Die Lithothek arbeitet dabei mit Museen
-    zusammen und integriert Sammlungen auch in die eigenen Räume.
+    Die Lithothek arbeitet mit Museen zusammen und integriert Sammlungen auch in die
+    eigenen Räume. Das Konzept für die virtuelle Ausstellung entsteht derzeit
+    (siehe Projektplan, Bereich „Virtuelles Museum").
   </p>
-  <p>
-    <strong>Platzhalter:</strong> Konzept für virtuelle Ausstellung / Bildergalerie der besten
-    Sammlungsstücke folgt (siehe Projektplan, Bereich „Virtuelles Museum“).
+
+  <h2>Einblicke in die Sammlung</h2>
+  <p class="demo-note">
+    <strong>Beispielansicht:</strong> Die gezeigten Fotos sind frei lizenzierte
+    Platzhalter (Bildnachweis im Impressum) und werden durch eigene Sammlungsfotos ersetzt.
   </p>
+  <div class="gallery">
+    {einblicke.map((e) => (
+      <figure>
+        <img src={e.bild} alt={e.titel} loading="lazy" />
+        <figcaption>{e.titel}</figcaption>
+      </figure>
+    ))}
+  </div>
 </BaseLayout>

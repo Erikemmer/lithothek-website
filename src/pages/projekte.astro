@@ -1,18 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CrystalMotif from '../components/brand/CrystalMotif.astro';
 import { getCollection } from 'astro:content';
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
 ---
-<BaseLayout title="Projekte">
-  <h1>Unsere Projekte</h1>
-  <div class="card-grid">
-    {projekte.map((p) => (
-      <div class="card">
-        <h3>{p.data.titel}</h3>
-        <p>{p.data.kurzbeschreibung}</p>
-        {p.data.externerLink && <a href={p.data.externerLink} target="_blank" rel="noopener">Mehr erfahren →</a>}
-      </div>
+<BaseLayout
+  title="Projekte"
+  pageTitle="Unsere Projekte"
+  kicker="Was wir aufbauen"
+  lead="Zwei Vorhaben tragen die Arbeit der Lithothek: die physische Sammlung der Münchner Micromounter und ihr digitales Gegenstück."
+>
+  <div class="card-grid card-grid--media card-grid--two">
+    {projekte.map((p, i) => (
+      <article class="card card--media">
+        <div class="card-media">
+          {p.data.bild
+            ? <img src={p.data.bild} alt={p.data.titel} loading="lazy" />
+            : <CrystalMotif variant="card" seed={i + 1} />}
+        </div>
+        <div class="card-body">
+          <h3>{p.data.titel}</h3>
+          <p>{p.data.kurzbeschreibung}</p>
+          {p.data.externerLink
+            ? <a href={p.data.externerLink} target="_blank" rel="noopener">Mehr erfahren →</a>
+            : <a href="/lithothek-online/">Zur Sammlung →</a>}
+        </div>
+      </article>
     ))}
   </div>
 </BaseLayout>
