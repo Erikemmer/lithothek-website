@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+/*
+ * Community-Unterseite der Sammlungsverwaltung (Entscheidung 08/2026):
+ * Als einzige der vier Kacheln (Dokumentation, Forschung, Langzeitarchivierung,
+ * Community) bekommt Community jetzt eine eigene Unterseite.
+ * Wichtig laut Entscheidungsprotokoll: KEIN Verweis auf den bewusst von der
+ * Website entfernten Bereich. Stattdessen ggf. Social-Media-Kanäle verlinken.
+ */
+const sammler = (await getCollection('sammler')).filter((s) => s.data.veroeffentlicht);
+---
+<BaseLayout
+  title="Community"
+  pageTitle="Community"
+  kicker="Gemeinsam sammeln"
+  lead="Die Lithothek lebt vom Mitmachen: Begeisterte pflegen die Sammlung gemeinsam – nach dem Motto „jeder darf, keiner muss“."
+>
+  <div class="article-body">
+    <p>
+      Eine Sammlung, die einer Gruppe gehört, ist mehr als die Summe ihrer Objekte. In der
+      Lithothek arbeiten Sammlerinnen, Sammler und Freunde der Mineralogie ehrenamtlich
+      zusammen: Sie bestimmen und dokumentieren Neuzugänge, pflegen die digitale
+      Sammlungsverwaltung und erhalten das Andenken an die Menschen, deren Lebenswerke
+      hier weiterleben.
+    </p>
+
+    <h2>Mitmachen</h2>
+    <p>
+      Es gibt viele Wege, sich einzubringen – vom Bestimmen und Fotografieren einzelner
+      Stufen über die Mitarbeit an der digitalen Erfassung bis zur Übergabe einer eigenen
+      Sammlung. Niemand muss sich verpflichten: Jeder Beitrag zählt, in dem Umfang, der
+      zum eigenen Leben passt.
+    </p>
+    <p>
+      Sie möchten mitmachen oder haben Fragen zur Sammlung? Rufen Sie uns an unter
+      Telefon 089 90198102 – die vollständigen Kontaktdaten stehen im <a href="/impressum/">Impressum</a>.
+    </p>
+    <!-- TODO: Sobald offizielle Social-Media-Kanäle der Lithothek existieren,
+         hier verlinken (derzeit keine bekannt). -->
+  </div>
+
+  <div class="card-grid" style="margin-top:2.5rem;">
+    <div class="card">
+      <h3><a class="card-title-link" href="/sammler/">Sammler-Steckbriefe</a></h3>
+      <p>Die Menschen hinter der Sammlung: {sammler.length} Steckbriefe erzählen, wie Lebenswerke in die Lithothek gefunden haben.</p>
+      <a href="/sammler/">Zu den Steckbriefen →</a>
+    </div>
+    <div class="card">
+      <h3><a class="card-title-link" href="/news/">Neuigkeiten</a></h3>
+      <p>Was sich in Sammlung und Gemeinschaft tut – Berichte, Termine und Fundstücke.</p>
+      <a href="/news/">Zu den News →</a>
+    </div>
+    <div class="card">
+      <h3><a class="card-title-link" href="/ueber-uns/">Über die Lithothek gGmbH</a></h3>
+      <p>Warum es die Lithothek gibt und welchen Auftrag sie verfolgt.</p>
+      <a href="/ueber-uns/">Mehr erfahren →</a>
+    </div>
+  </div>
+</BaseLayout>

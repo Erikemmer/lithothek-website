@@ -4,54 +4,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Impressum" pageTitle="Impressum" kicker="Rechtliches">
   <p>
     <em>
-      Hinweis für die Redaktion: Die mit [eckigen Klammern] markierten Angaben müssen vor
-      dem Livegang durch die tatsächlichen, offiziellen Daten der Lithothek gGmbH ersetzt
-      werden. Struktur und Pflichtangaben entsprechen § 5 DDG (seit 14.05.2024 Nachfolger
-      des TMG) und § 18 Abs. 2 MStV.
+      Hinweis für die Redaktion: Die gelb markierten Angaben („FEHLT") liegen noch nicht
+      vor und müssen vor dem Livegang ergänzt werden (offene Rückfragen an Erik:
+      E-Mail-Adresse, HRB-Nummer, USt-IdNr., zuständiges Finanzamt + Datum des
+      Freistellungsbescheids). Struktur und Pflichtangaben entsprechen § 5 DDG
+      (seit 14.05.2024 Nachfolger des TMG) und § 18 Abs. 2 MStV.
     </em>
   </p>
 
   <h2>Angaben gemäß § 5 DDG</h2>
   <p>
-    Lithothek gGmbH<br />
-    [Straße, Hausnummer]<br />
-    [PLZ, Ort]
+    Die Lithothek gGmbH<br />
+    Am Brunnen 18<br />
+    85551 Kirchheim
   </p>
 
-  <h2>Vertreten durch</h2>
-  <p>Geschäftsführung: [Name der Geschäftsführung]</p>
+  <h2>Vertreten durch die Geschäftsführung</h2>
+  <p>Matthias Fieser</p>
+
+  <h2>Kontakt</h2>
+  <p>
+    Telefon: 089 90198102<br />
+    E-Mail: <span class="todo-missing">[FEHLT – E-Mail-Adresse, bei Erik nachfragen]</span>
+  </p>
 
   <h2>Registereintrag</h2>
   <p>
     Eintragung im Handelsregister.<br />
-    Registergericht: [Amtsgericht]<br />
-    Registernummer: [HRB-Nummer]
+    Registergericht: Amtsgericht München<br />
+    Registernummer (HRB): <span class="todo-missing">[FEHLT – HRB-Nummer, bei Erik nachfragen]</span>
   </p>
 
-  <h2>Kontakt</h2>
+  <h2>Steuernummer / Umsatzsteuer</h2>
   <p>
-    Telefon: [Telefonnummer]<br />
-    E-Mail: [E-Mail-Adresse]
+    Steuernummer: 143/237/20909<br />
+    Umsatzsteuer-Identifikationsnummer:
+    <span class="todo-missing">[FEHLT – USt-IdNr., bei Erik nachfragen]</span>
   </p>
 
-  <h2>Umsatzsteuer / Steuernummer</h2>
+  <h2>Freistellung wegen Gemeinnützigkeit</h2>
   <p>
-    [Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG, sofern vorhanden,
-    andernfalls diese Zeile entfernen]<br />
-    Steuernummer: [Steuernummer]
-  </p>
-
-  <h2>Gemeinnützigkeit</h2>
-  <p>
-    Die Lithothek gGmbH ist als gemeinnützige Gesellschaft mit beschränkter Haftung
-    anerkannt. Zuständiges Finanzamt: [Finanzamt]. Anerkennung der Gemeinnützigkeit
-    gemäß Freistellungsbescheid vom [Datum des letzten Freistellungsbescheids].
+    Die Lithothek gGmbH ist nach dem zuletzt ergangenen Freistellungsbescheid des
+    Finanzamts <span class="todo-missing">[FEHLT – Finanzamt]</span> vom
+    <span class="todo-missing">[FEHLT – Datum]</span> wegen Förderung der Volksbildung
+    auf dem Gebiet der Mineralogie, Lagerstättenkunde, Geologie, Paläontologie und des
+    Bergbaus als gemeinnützig anerkannt.
   </p>
 
   <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <!-- Stand des Gesprächs mit Erik: Tendenz zu „Matthias Fieser als Geschäftsführer",
+       aber noch nicht final bestätigt. Falls stattdessen die gGmbH selbst genannt
+       werden soll, diesen Block anpassen. -->
   <p>
-    [Name]<br />
-    [Anschrift, falls abweichend von oben]
+    Matthias Fieser<br />
+    (Anschrift wie oben)
   </p>
 
   <h2>EU-Streitschlichtung</h2>

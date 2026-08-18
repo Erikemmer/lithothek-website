@@ -57,6 +57,28 @@ const stats = [
   { wert: anzahlMineralarten, label: 'Mineralarten' },
   { wert: anzahlSammler, label: 'Sammler' },
 ];
+
+/*
+ * Aktivität: die letzten 5 Sammlungsereignisse, vollständig aus der
+ * Objekt-Collection berechnet (nichts erfunden): neue Objekte sowie die
+ * jeweils erste Zuwendung einer Spenderin / eines Spenders.
+ */
+const ersteZuwendung = new Map<string, Date>();
+for (const o of objekte) {
+  const bisher = ersteZuwendung.get(o.data.sammler);
+  if (!bisher || o.data.datum < bisher) ersteZuwendung.set(o.data.sammler, o.data.datum);
+}
+const ereignisse = [
+  ...objekte.map((o) => ({
+    datum: o.data.datum,
+    text: `Neues Objekt: ${o.data.mineral} (${o.data.fundort}, ${o.data.land})`,
+  })),
+  ...[...ersteZuwendung.entries()].map(([sammler, datum]) => ({
+    datum,
+    text: `Erste Zuwendung: ${sammler}`,
+  })),
+].sort((a, b) => b.datum.valueOf() - a.datum.valueOf());
+const aktivitaet = ereignisse.slice(0, 5);
 ---
 <BaseLayout
   title="Die Lithothek Online"
@@ -84,6 +106,9 @@ const stats = [
   <div class="collection-grid">
     <div class="collection-main">
       <section class="panel">
+        <!-- TODO (größeres Feature, noch nicht spezifiziert, nicht umsetzen):
+             Erfassungsmaske, mit der Mitglieder neue Mineralien selbst in der
+             Sammlungsverwaltung erfassen können. Siehe docs/OFFENE-AUFGABEN.md -->
         <h2 class="panel-title">Objekte durchsuchen</h2>
         <form class="search-demo" aria-label="Objektsuche (Demo)">
           <input
@@ -148,6 +173,11 @@ const stats = [
 
     <aside class="collection-side">
       <section class="panel">
+        <!-- TODO (offene Entscheidung, nicht umsetzen): Mineralklassen-Systematik für
+             dieses Diagramm festlegen — Lapis (9 Klassen) vs. Strunz (10 Klassen);
+             danach das kategorie-Enum in src/content.config.ts anpassen.
+             Dazu gehört: Kontaktaufnahme mit den Entwicklern der Lapis-Systematik
+             wegen Kooperation/Rechteübertragung. Siehe docs/OFFENE-AUFGABEN.md -->
         <h2 class="panel-title">Sammlung nach Kategorien</h2>
         <div class="donut-wrap">
           <svg viewBox="0 0 140 140" role="img" aria-label="Verteilung der Sammlung nach Mineralkategorien">
@@ -177,10 +207,10 @@ const stats = [
       <section class="panel">
         <h2 class="panel-title">Aktivität</h2>
         <ul class="activity">
-          {objekte.slice(0, 5).map((o) => (
+          {aktivitaet.map((e) => (
             <li>
-              <span class="meta activity-date">{o.data.datum.toLocaleDateString('de-DE')}</span>
-              Neues Objekt: {o.data.mineral} ({o.data.land})
+              <span class="meta activity-date">{e.datum.toLocaleDateString('de-DE')}</span>
+              {e.text}
             </li>
           ))}
         </ul>
@@ -188,6 +218,9 @@ const stats = [
     </aside>
   </div>
 
+  <!-- Entscheidung 08/2026: Nur „Community" bekommt eine eigene Unterseite.
+       Dokumentation, Forschung und Langzeitarchivierung bleiben vorerst
+       Kacheln ohne Unterseite. -->
   <section class="card-grid" style="margin-top:2.5rem;">
     <div class="card">
       <h3>Dokumentation</h3>
@@ -202,8 +235,9 @@ const stats = [
       <p>Sichere Speicherung für kommende Generationen.</p>
     </div>
     <div class="card">
-      <h3>Community</h3>
+      <h3><a class="card-title-link" href="/lithothek-online/community/">Community</a></h3>
       <p>Gemeinsame Datenbasis für Sammler und Forscher.</p>
+      <a href="/lithothek-online/community/">Mehr erfahren →</a>
     </div>
   </section>
 </BaseLayout>
