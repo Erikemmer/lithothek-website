@@ -4,8 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Datenschutz" pageTitle="Datenschutzerklärung" kicker="Rechtliches">
   <p>
     <em>
-      Hinweis für die Redaktion: Die mit [eckigen Klammern] markierten Angaben müssen vor
-      dem Livegang ergänzt werden. Diese Erklärung beschreibt den aktuellen technischen
+      Hinweis für die Redaktion: Die gelb markierte Angabe (E-Mail-Adresse) liegt noch
+      nicht vor und muss vor dem Livegang ergänzt werden — identisch mit dem Impressum,
+      bitte synchron halten. Diese Erklärung beschreibt den aktuellen technischen
       Stand der Website (statische Seiten über Cloudflare Pages, keine Cookies, kein
       Tracking, kein Kontaktformular, kein Newsletter). Sobald ein Kontaktformular, ein
       Newsletter oder Analyse-Werkzeuge hinzukommen, muss diese Erklärung entsprechend
@@ -16,10 +17,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <h2>1. Verantwortliche Stelle</h2>
   <p>
     Verantwortlich im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br />
-    Lithothek gGmbH<br />
-    [Straße, Hausnummer]<br />
-    [PLZ, Ort]<br />
-    E-Mail: [E-Mail-Adresse]
+    Die Lithothek gGmbH<br />
+    Am Brunnen 18<br />
+    85551 Kirchheim<br />
+    Telefon: 089 90198102<br />
+    E-Mail: <span class="todo-missing">[FEHLT – E-Mail-Adresse, bei Erik nachfragen]</span>
   </p>
 
   <h2>2. Allgemeines zur Datenverarbeitung</h2>
@@ -88,9 +90,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <h2>8. Beschwerderecht bei der Aufsichtsbehörde</h2>
   <p>
     Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung
-    Ihrer personenbezogenen Daten zu beschweren (Art. 77 DSGVO). Zuständig ist unter anderem
-    die Aufsichtsbehörde des Bundeslandes, in dem die Lithothek gGmbH ihren Sitz hat:
-    [zuständige Landes-Datenschutzbehörde].
+    Ihrer personenbezogenen Daten zu beschweren (Art. 77 DSGVO). Für die Lithothek gGmbH
+    als nicht-öffentliche Stelle mit Sitz in Bayern ist zuständig:
+  </p>
+  <!-- Hinweis: Im Arbeitsauftrag stand „Sitz München" — das BayLDA hat seinen Sitz
+       tatsächlich in Ansbach (verifiziert über lda.bayern.de, 08/2026). -->
+  <p>
+    Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)<br />
+    Promenade 18<br />
+    91522 Ansbach<br />
+    <a href="https://www.lda.bayern.de/" target="_blank" rel="noopener">www.lda.bayern.de</a>
   </p>
 
   <h2>9. Automatisierte Entscheidungsfindung</h2>
@@ -101,7 +110,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <h2>10. Stand dieser Datenschutzerklärung</h2>
   <p>
-    Diese Datenschutzerklärung hat den Stand [Monat/Jahr]. Durch die Weiterentwicklung der
+    Diese Datenschutzerklärung hat den Stand August 2026. Durch die Weiterentwicklung der
     Website kann es notwendig werden, diese Datenschutzerklärung anzupassen.
   </p>
 </BaseLayout>

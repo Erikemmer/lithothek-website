@@ -567,6 +567,69 @@ footer.site-footer .footer-grid nav li { margin-bottom: 0.45rem; }
 .band .card { border-color: var(--warm-sand); }
 .band--light .card { background: var(--ivory); }
 
+/* ---------- Dunkles Band (Startseite: „Die Lithothek gGmbH") ---------- */
+.band--dark {
+  background: var(--color-dark);
+  color: var(--ivory);
+  border-top: 1px solid rgba(182, 154, 99, 0.35);
+  border-bottom: 1px solid rgba(182, 154, 99, 0.35);
+  padding: 1.25rem 0 2rem;
+}
+.band--dark h2,
+.band--dark h3 { color: var(--ivory); }
+.band--dark .card { color: var(--color-ink); }
+.band--dark .card h3,
+.band--dark .card a.card-title-link { color: var(--color-ink); }
+.ggmbh-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2.5rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 46rem) {
+  .ggmbh-grid { grid-template-columns: 1fr; }
+}
+.ggmbh-text {
+  max-width: 38rem;
+  font-size: 1.0625rem;
+  opacity: 0.92;
+}
+.ggmbh-stifter {
+  background: rgba(243, 239, 230, 0.06);
+  border: 1px solid rgba(182, 154, 99, 0.4);
+  border-radius: var(--radius-card);
+  padding: 1.35rem 1.5rem;
+}
+.ggmbh-stifter h3 { margin-top: 0; font-size: 1.25rem; }
+.ggmbh-stifter p { font-size: 0.95rem; opacity: 0.92; }
+.ggmbh-tel {
+  font-size: 0.9rem;
+  color: var(--ivory);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.ggmbh-sammler-head { margin-top: 0.5rem; }
+.ggmbh-sammler-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.section-link--gold { color: var(--color-accent); }
+.section-link--gold:hover { color: var(--ivory); }
+
+/* Redaktioneller Platzhalter für fehlende Pflichtangaben (vor Livegang ersetzen) */
+.todo-missing {
+  background: #ffe27a;
+  color: var(--charcoal);
+  padding: 0 0.3em;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
 /* ---------- Foto-Hero ---------- */
 .hero--photo { position: relative; }
 .hero--photo .hero-bg {

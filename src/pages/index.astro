@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 
 const projekte = (await getCollection('projekte')).sort((a, b) => a.data.reihenfolge - b.data.reihenfolge);
 const news = (await getCollection('news')).sort((a, b) => b.data.datum.valueOf() - a.data.datum.valueOf()).slice(0, 4);
+const sammlerTeaser = (await getCollection('sammler')).filter((s) => s.data.veroeffentlicht).slice(0, 3);
 
 /*
  * Startseite als vollflächige Bänder (Design-Zielbild 08/2026):
@@ -126,6 +127,55 @@ const merkmale = [
               </a>
             </div>
           </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Die Lithothek gGmbH / Stifter-Hinweis: dunkles Band (Entscheidung Erik 08/2026:
+       nur eine übergeordnete, kurze Vorstellung mit Fokus auf Spender/Erblasser —
+       KEINE Aufteilung in mehrere Gebiete) -->
+  <section class="band band--dark on-dark" aria-label="Über die Lithothek gGmbH">
+    <div class="wrap">
+      <div class="ggmbh-grid">
+        <div>
+          <p class="kicker">Gemeinnützige Trägerin</p>
+          <h2>Die Lithothek gGmbH</h2>
+          <p class="ggmbh-text">
+            Wir bewahren Lebenswerke. Was mit einer Mineraliensammlung beginnt, wächst zu
+            einem gemeinsamen Erbe heran – getragen von den Menschen, die es aufgebaut
+            haben, und weitergegeben an alle, die sich dafür interessieren.
+          </p>
+        </div>
+        <div class="ggmbh-stifter">
+          <h3>Sie möchten Stifter/in werden?</h3>
+          <p>
+            Ob eine einzelne Mineralstufe oder eine ganze Sammlung – wir freuen uns über
+            Zuwendungen, die dauerhaft bewahrt und der Allgemeinheit zugänglich gemacht
+            werden.
+          </p>
+          <!-- TODO: Sobald die offizielle E-Mail-Adresse der gGmbH vorliegt (offene
+               Rückfrage, siehe Impressum), hier einen mailto-Link als primäre
+               Kontaktmöglichkeit ergänzen. -->
+          <div class="hero-actions">
+            <a class="button" href="/impressum/">Kontakt aufnehmen</a>
+            <span class="ggmbh-tel">Telefon 089 90198102</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sammler-Teaser: Lebenswerke sichtbar machen -->
+      <div class="section-head ggmbh-sammler-head">
+        <h3 class="ggmbh-sammler-title">Lebenswerke, die wir bewahren</h3>
+        <a class="section-link section-link--gold" href="/sammler/">Alle Sammler-Steckbriefe ansehen →</a>
+      </div>
+      <div class="card-grid card-grid--two">
+        {sammlerTeaser.map((s) => (
+          <div class="card">
+            <h3><a class="card-title-link" href={`/sammler/${s.id}/`}>{s.data.name}</a></h3>
+            {s.data.schwerpunkt && <p>{s.data.schwerpunkt}</p>}
+            <a href={`/sammler/${s.id}/`}>Zum Steckbrief →</a>
+          </div>
         ))}
       </div>
     </div>
