@@ -2,17 +2,95 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 /*
- * Fließtext: überarbeitete Fassung von Matthias (08/2026), wörtlich übernommen.
- * Hinweis aus dem Projektkontext: Zahlen/Gründungsdaten (2001, Stückzahlen)
- * gelten weiterhin als unbestätigt — nicht eigenmächtig ändern, aber auch
- * nicht als gesicherten Fakt an anderer Stelle weiterverwenden.
+ * Fließtext: überarbeitete Fassung von Matthias (08/2026), wörtlich übernommen —
+ * einzige Änderung auf Eriks Wunsch (08/2026): das Motto „jeder darf, keiner muss"
+ * steht nicht mehr in Anführungszeichen.
+ * Gründungsdaten (2001, Münchner Micromounter) sind laut Entscheidungsprotokoll
+ * vom 09.08.2026 von Erik BESTÄTIGT und dürfen verwendet werden.
+ *
+ * Neue Abschnitte (08/2026, Entwurf Erik + Claude):
+ *  1. „Aus unserer Satzung" — Zitat-Tafel; §-Angabe und PDF folgen, sobald die
+ *     Satzung vorliegt (Platzhalter mit .todo-missing markiert).
+ *  2. Zeitstrahl „Unsere Geschichte" — Etappen teils Platzhalter.
+ *  3. „Die Menschen dahinter" — Portrait-Karten mit Platzhalter-Silhouetten;
+ *     Fotos erst nach geklärten Bildrechten/Einwilligungen einsetzen.
+ * Platzhalter niemals raten/erfinden — Werte kommen von Erik/Matthias.
  */
+
+const zeitstrahl = [
+  {
+    jahr: '2001',
+    titel: 'Die Idee: gemeinsam statt allein',
+    text: 'Aus der Münchner Micromounter-Gruppe entsteht die Lithothek – eine Sammlung, die einer Gemeinschaft gehört, nach dem Motto jeder darf, keiner muss.',
+    major: true,
+    platzhalter: false,
+  },
+  {
+    jahr: '[Jahr]',
+    titel: 'Die erste Sammlungsübernahme',
+    text: '[Wessen Sammlung war die erste? Anlass, Umfang und eine kleine Anekdote dazu]',
+    major: false,
+    platzhalter: true,
+  },
+  {
+    jahr: '[Jahr]',
+    titel: 'Einzug ins Stufenheim',
+    text: '[Wann bekam die Sammlung ihr Zuhause? Kurz beschreiben, was das Stufenheim ist]',
+    major: false,
+    platzhalter: true,
+  },
+  {
+    jahr: '[Jahr]',
+    titel: '[Meilenstein, z. B. eine besondere Schenkung oder ein Jubiläums-Objekt]',
+    text: '[Kurztext]',
+    major: false,
+    platzhalter: true,
+  },
+  {
+    jahr: '[Jahr]',
+    titel: 'Gründung der Lithothek gGmbH',
+    text: '[Datum/Anlass ergänzen] – die Sammlung bekommt ihre eigene gemeinnützige Rechtsform.',
+    major: true,
+    platzhalter: true,
+  },
+  {
+    jahr: '2026',
+    titel: 'Die Lithothek geht online',
+    text: 'Neue Website, digitale Sammlungsverwaltung und das virtuelle Museum machen die Sammlung erstmals für alle zugänglich.',
+    major: true,
+    platzhalter: false,
+  },
+];
+
+const menschen = [
+  {
+    name: 'Matthias Fieser',
+    rolle: 'Geschäftsführer',
+    text: '[2–3 Sätze: Wie kam Matthias zur Mineralogie? Wofür steht er in der Lithothek? Sammelschwerpunkt?]',
+    platzhalter: true,
+    namePlatzhalter: false,
+  },
+  {
+    name: '[Name]',
+    rolle: '[Rolle, z. B. Sammlungspflege]',
+    text: '[2–3 Sätze zur Person und ihrer Aufgabe in der Lithothek]',
+    platzhalter: true,
+    namePlatzhalter: true,
+  },
+  {
+    name: '[Name]',
+    rolle: '[Rolle, z. B. Dokumentation & Fotografie]',
+    text: '[2–3 Sätze zur Person und ihrer Aufgabe in der Lithothek]',
+    platzhalter: true,
+    namePlatzhalter: true,
+  },
+];
 ---
 <BaseLayout
   title="Über uns"
   pageTitle="Über die Lithothek gGmbH"
   kicker="Wer wir sind"
-  lead="„Jeder darf, keiner muss.“"
+  lead="Jeder darf, keiner muss."
 >
   <div class="article-body">
     <p>
@@ -22,8 +100,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
     <p>
       Die Grundidee: Warum alleine sammeln, wenn gemeinsam sammeln so viel mehr Freude
-      bereitet. Lasst uns eine Micromount-Sammlung nach dem Motto „jeder darf, keiner
-      muss“ schaffen. Die Pflege einer Sammlung durch eine Gruppe bietet mehr Sicherheit.
+      bereitet. Lasst uns eine Micromount-Sammlung nach dem Motto jeder darf, keiner
+      muss schaffen. Die Pflege einer Sammlung durch eine Gruppe bietet mehr Sicherheit.
     </p>
     <p>
       Seit diesen Anfängen ist die Lithothek stetig gewachsen – heute umfasst sie viele
@@ -39,7 +117,254 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       Wege zur Förderung der Volksbildung auf dem Gebiet der Mineralogie,
       Lagerstättenkunde, Geologie, Paläontologie und des Bergbaus schaffen.
     </p>
-    <!-- TODO: Satzungsauszug von Erik einfügen — der Text („aus der Mail“) liegt
-         noch nicht vor. Nicht raten oder erfinden; bei Erik nachfragen. -->
   </div>
+
+  <!-- ═══ Aus unserer Satzung (Zitat-Tafel) ═══ -->
+  <section class="satzung" aria-labelledby="satzung-heading">
+    <figure class="satzung-panel">
+      <blockquote id="satzung-heading">
+        „Zweck der Gesellschaft ist die Förderung der Volksbildung auf dem Gebiet der
+        Mineralogie, der Lagerstättenkunde, der Geologie, der Paläontologie und des
+        Bergbaus.“
+      </blockquote>
+      <div class="satzung-rule" aria-hidden="true"></div>
+      <figcaption>
+        Aus unserer Satzung · <span class="todo-missing">§ [x] Abs. [y]</span> · Die Lithothek gGmbH
+      </figcaption>
+      <!-- TODO: Satzung als PDF unter public/dokumente/satzung.pdf ablegen und Link aktivieren -->
+      <p class="satzung-link"><span class="todo-missing">[Link folgt: Die vollständige Satzung lesen (PDF)]</span></p>
+    </figure>
+  </section>
+
+  <!-- ═══ Zeitstrahl: Unsere Geschichte ═══ -->
+  <section class="geschichte" aria-labelledby="geschichte-heading">
+    <p class="kicker">Unsere Geschichte</p>
+    <h2 id="geschichte-heading">Ein Vierteljahrhundert gemeinsames Sammeln</h2>
+    <ol class="zeitstrahl">
+      {zeitstrahl.map((e) => (
+        <li class={e.major ? 'etappe etappe--major' : 'etappe'}>
+          <span class="etappe-jahr">{e.platzhalter && e.jahr.startsWith('[') ? <span class="todo-missing">{e.jahr}</span> : e.jahr}</span>
+          <span class="etappe-titel">{e.platzhalter && e.titel.startsWith('[') ? <span class="todo-missing">{e.titel}</span> : e.titel}</span>
+          <p class="etappe-text">{e.platzhalter && e.text.startsWith('[') ? <span class="todo-missing">{e.text}</span> : e.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- ═══ Die Menschen dahinter ═══ -->
+  <section class="menschen" aria-labelledby="menschen-heading">
+    <p class="kicker">Die Menschen dahinter</p>
+    <h2 id="menschen-heading">Getragen von Ehrenamt</h2>
+    <p class="menschen-intro">
+      Die Lithothek lebt von Menschen, die Wissen, Zeit und Sorgfalt einbringen – beim
+      Bestimmen, Erfassen, Fotografieren und Bewahren.
+    </p>
+    <div class="menschen-grid">
+      {menschen.map((p) => (
+        <article class="person">
+          <div class="person-avatar" aria-hidden="true">
+            <!-- Platzhalter-Silhouette: durch Foto ersetzen (quadratisch, min. 400×400px);
+                 vorher Einwilligung der abgebildeten Person einholen (Bildrechte-Aufgabe) -->
+            <svg viewBox="0 0 100 100" role="img" aria-label="Platzhalter-Portrait">
+              <circle cx="50" cy="36" r="18" />
+              <path d="M14 92c3-22 17-32 36-32s33 10 36 32z" />
+            </svg>
+          </div>
+          <h3>{p.namePlatzhalter ? <span class="todo-missing">{p.name}</span> : p.name}</h3>
+          <p class="person-rolle">{p.rolle.startsWith('[') ? <span class="todo-missing">{p.rolle}</span> : p.rolle}</p>
+          <p class="person-text"><span class="todo-missing">{p.text}</span></p>
+        </article>
+      ))}
+    </div>
+    <p class="menschen-hint">
+      Die Sammlerinnen und Sammler, deren Stücke die Lithothek tragen, würdigen wir in
+      den <a href="/sammler/">Sammler-Steckbriefen</a>.
+    </p>
+  </section>
 </BaseLayout>
+
+<style>
+  /* ---------- Aus unserer Satzung: Zitat-Tafel (CI: Obsidian-Fläche, Gold-Akzent) ---------- */
+  .satzung { margin: 2.5rem 0 1rem; }
+  .satzung-panel {
+    margin: 0;
+    background: var(--color-dark);
+    color: var(--ivory);
+    border-radius: var(--radius-card);
+    border: 1px solid rgba(182, 154, 99, 0.35);
+    padding: 2.75rem 3.25rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+  }
+  .satzung-panel::before {
+    content: '§';
+    font-family: var(--font-serif);
+    font-size: 7.5rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.25;
+    position: absolute;
+    top: 0.75rem;
+    left: 1.5rem;
+    pointer-events: none;
+  }
+  .satzung-panel blockquote {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.55rem;
+    line-height: 1.5;
+    max-width: 40rem;
+    position: relative;
+  }
+  .satzung-rule {
+    width: 3.5rem;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.35rem 0 0;
+  }
+  .satzung-panel figcaption {
+    margin-top: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-sand);
+  }
+  .satzung-link { margin: 1.4rem 0 0; font-size: 0.9rem; }
+  @media (max-width: 46rem) {
+    .satzung-panel { padding: 2rem 1.5rem; }
+    .satzung-panel blockquote { font-size: 1.3rem; }
+  }
+
+  /* ---------- Zeitstrahl (Gold-Linie, Etappen-Punkte) ---------- */
+  .geschichte { margin: 3.5rem 0 1rem; }
+  .geschichte h2 { margin-top: 0.35rem; }
+  .zeitstrahl {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0 0 0 2.1rem;
+    position: relative;
+  }
+  .zeitstrahl::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: linear-gradient(var(--gold), var(--warm-sand));
+  }
+  .etappe { position: relative; padding: 0 0 2.4rem 0.4rem; }
+  .etappe:last-child { padding-bottom: 0; }
+  .etappe::before {
+    content: '';
+    position: absolute;
+    left: -2.1rem;
+    top: 0.45rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 3px solid var(--gold);
+    box-sizing: border-box;
+  }
+  .etappe--major::before { background: var(--gold); }
+  .etappe-jahr {
+    display: block;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.7rem;
+    line-height: 1.15;
+  }
+  .etappe-titel {
+    display: block;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--mineral-teal);
+    margin-top: 0.15rem;
+  }
+  .etappe-text {
+    margin: 0.4rem 0 0;
+    max-width: 36rem;
+    font-size: 0.975rem;
+  }
+
+  /* ---------- Die Menschen dahinter (dunkles Panel mit Portrait-Karten) ---------- */
+  .menschen {
+    margin: 3.5rem 0 2rem;
+    background: var(--color-dark);
+    color: var(--ivory);
+    border-radius: var(--radius-card);
+    border: 1px solid rgba(182, 154, 99, 0.35);
+    padding: 2.75rem 3.25rem 2.25rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .menschen h2 { color: var(--ivory); margin-top: 0.35rem; }
+  .menschen-intro { max-width: 38rem; opacity: 0.85; }
+  .menschen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .person {
+    background: rgba(243, 239, 230, 0.06);
+    border: 1px solid rgba(182, 154, 99, 0.4);
+    border-top: 3px solid var(--gold);
+    border-radius: var(--radius-card);
+    padding: 1.75rem 1.4rem;
+    text-align: center;
+  }
+  .person-avatar {
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--gold);
+    background: rgba(243, 239, 230, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .person-avatar svg {
+    width: 68%;
+    height: 68%;
+    fill: var(--warm-sand);
+    opacity: 0.6;
+  }
+  .person h3 {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--ivory);
+    margin: 0;
+  }
+  .person-rolle {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--warm-sand);
+    margin: 0.4rem 0 0.75rem;
+  }
+  .person-text {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.9;
+  }
+  .menschen-hint {
+    margin: 1.75rem 0 0;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+  .menschen-hint a { color: var(--gold); }
+  .menschen-hint a:hover { color: var(--ivory); }
+  @media (max-width: 46rem) {
+    .menschen { padding: 2rem 1.5rem; }
+  }
+</style>
