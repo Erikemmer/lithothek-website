@@ -92,6 +92,7 @@ const menschen = [
   kicker="Wer wir sind"
   lead="Jeder darf, keiner muss."
 >
+  <div class="intro-grid">
   <div class="article-body">
     <p>
       Die Lithothek der Münchner Micromounter entstand im Jahr 2001. Die Ausgangslage:
@@ -117,6 +118,21 @@ const menschen = [
       Wege zur Förderung der Volksbildung auf dem Gebiet der Mineralogie,
       Lagerstättenkunde, Geologie, Paläontologie und des Bergbaus schaffen.
     </p>
+  </div>
+
+  <!-- Bild-Platzhalter rechts neben dem Einleitungstext.
+       TODO: echtes Foto einsetzen (Hochformat ca. 4:5, mind. 1200px breit,
+       z. B. Blick in die Sammlung / Schubladen im Stufenheim); Bildrechte klären. -->
+  <aside class="intro-bild">
+    <div class="intro-bild-platzhalter">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 6 18 22l6 30h16l6-30L32 6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M18 22h28M32 6l-4 16 4 30M32 6l4 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+      </svg>
+      <p><span class="todo-missing">[Foto folgt: z. B. Blick in die Sammlung oder Schubladen im Stufenheim]</span></p>
+    </div>
+    <p class="intro-bild-caption"><span class="todo-missing">[Bildunterschrift]</span></p>
+  </aside>
   </div>
 
   <!-- ═══ Aus unserer Satzung (Zitat-Tafel) ═══ -->
@@ -184,6 +200,40 @@ const menschen = [
 </BaseLayout>
 
 <style>
+  /* ---------- Einleitung: Text links, Bild-Platzhalter rechts ---------- */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 46rem) minmax(16rem, 22rem);
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (max-width: 60rem) {
+    .intro-grid { grid-template-columns: 1fr; }
+  }
+  .intro-bild { margin-top: 0.5rem; }
+  .intro-bild-platzhalter {
+    aspect-ratio: 4 / 5;
+    border: 2px dashed var(--gold);
+    border-radius: var(--radius-card);
+    background: var(--warm-sand);
+    color: var(--bronze);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .intro-bild-platzhalter svg { width: 3.5rem; height: 3.5rem; opacity: 0.7; }
+  .intro-bild-platzhalter p { margin: 0; font-size: 0.85rem; max-width: 16rem; }
+  .intro-bild-caption {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+    color: var(--bronze);
+    text-align: center;
+  }
+
   /* ---------- Aus unserer Satzung: Zitat-Tafel (CI: Obsidian-Fläche, Gold-Akzent) ---------- */
   .satzung { margin: 2.5rem 0 1rem; }
   .satzung-panel {
